@@ -10,6 +10,7 @@
 
     <!-- include core Blockly script and blocks -->
     <script src="google-blockly-ba6dfd8/blockly_compressed.js"></script>
+    <script src="google-blockly-ba6dfd8/javascript_compressed.js"></script>
     <script src="google-blockly-ba6dfd8/blocks_compressed.js"></script>
     <script src="google-blockly-ba6dfd8/msg/js/en.js"></script>
 </head>
@@ -31,11 +32,39 @@
         <block type="text_print"></block>
     </xml>
 
-    <!-- inject Blockly into the blocklyDiv -->
+    <div id="textarea"></div>
+    <div id="controls">
+        <button id="runbutton">Run Script</button>
+    </div>
     <script>
+        // inject Blockly into the blocklyDiv
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox')
         });
+
+        // convert workspace to text code
+        function updateTextArea(event) {
+            let code = Blockly.JavaScript.workspaceToCode(workspace);
+            document.getElementById('textarea').innerText = code;
+        }
+        workspace.addChangeListener(updateTextArea);
+
+        function runCode() {
+            // Generate JavaScript code and run it.
+            window.LoopTrap = 1000;
+            Blockly.JavaScript.INFINITE_LOOP_TRAP =
+                'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+            let code = Blockly.JavaScript.workspaceToCode(workspace);
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            try {
+                eval(code);
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+        const runButton = document.getElementById('runbutton');
+        runButton.addEventListener('click', runCode);
     </script>
 </body>
 
