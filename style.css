@@ -6,7 +6,12 @@ body {
 
 #textarea {
     width: 500px;
-    height: 480px;
+    height: 478px;
     padding: 10px;
     border: 1px black solid;
+    margin-left: 5px;
+}
+
+#controls {
+    margin-left: 5px;
 }
