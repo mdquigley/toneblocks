@@ -43,20 +43,29 @@
             toolbox: document.getElementById('toolbox')
         });
 
-        // convert workspace to text code
+        // update textarea function
         function updateTextArea(event) {
+            // convert workspace to text code
             let code = Blockly.JavaScript.workspaceToCode(workspace);
+            //update textarea div with text code
             document.getElementById('textarea').innerText = code;
         }
+        // add change listener to textarea, call update function
         workspace.addChangeListener(updateTextArea);
 
+        // Generate JavaScript code and run it
         function runCode() {
-            // Generate JavaScript code and run it.
+
+            // prevent infinite loop
             window.LoopTrap = 1000;
             Blockly.JavaScript.INFINITE_LOOP_TRAP =
                 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+
+            // convert workspace to text code
             let code = Blockly.JavaScript.workspaceToCode(workspace);
+
             Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            // evaluate code
             try {
                 eval(code);
             } catch (e) {
@@ -64,6 +73,7 @@
             }
         }
 
+        // setup run button and add on-click listener
         const runButton = document.getElementById('runbutton');
         runButton.addEventListener('click', runCode);
     </script>
