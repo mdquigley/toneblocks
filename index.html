@@ -13,6 +13,7 @@
     <script src="google-blockly-ba6dfd8/javascript_compressed.js"></script>
     <script src="google-blockly-ba6dfd8/blocks_compressed.js"></script>
     <script src="google-blockly-ba6dfd8/msg/js/en.js"></script>
+    <script src="tone-13.8.2/Tone.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -65,6 +66,9 @@
             let code = Blockly.JavaScript.workspaceToCode(workspace);
 
             Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+            // test adding Tone synth trigger
+            code = code + "synth.triggerAttackRelease('C4', '8n')";
             // evaluate code
             try {
                 eval(code);
@@ -76,6 +80,12 @@
         // setup run button and add on-click listener
         const runButton = document.getElementById('runbutton');
         runButton.addEventListener('click', runCode);
+
+        // setup hello-tone
+        //create a synth and connect it to the master output (your speakers)
+        let synth = new Tone.Synth().toMaster()
+
+        //play a middle 'C' for the duration of an 8th note
     </script>
 </body>
 
