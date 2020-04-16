@@ -19,24 +19,39 @@
 
 <body>
     <h1>THESIS</h1>
+    <div id="interface">
 
-    <!-- empty div for Blockly injection -->
-    <div id="blocklyDiv" style="height: 500px; width: 600px"></div>
+        <!-- Global Controls -->
+        <div id="transport">
+            <h2>Transport</h2>
+            <div id="controls">
+                <div id="tempoControl">
+                    <div id="tempoDisplay">
+                        <label for="tempoSlider">Tempo</label>
+                        <input type="number" id="tempoNumber" name="tempoNumber" readonly="true">
+                    </div>
+                    <input type="range" id="tempoSlider" name="tempoSlider" min="60" max="260" value="120">
+                </div>
+                <button id="runbutton">Run Script</button>
+            </div>
+        </div>
+        <div id="canvas">
+            <!-- empty div for Blockly injection -->
+            <div id="blocklyDiv" style="height: 500px; width: 600px"></div>
 
-    <!-- toolbox -->
-    <xml id="toolbox" style="display: none">
-        <block type="controls_if"></block>
-        <block type="controls_repeat_ext"></block>
-        <block type="logic_compare"></block>
-        <block type="math_number"></block>
-        <block type="math_arithmetic"></block>
-        <block type="text"></block>
-        <block type="text_print"></block>
-    </xml>
+            <!-- toolbox -->
+            <xml id="toolbox" style="display: none">
+                <block type="controls_if"></block>
+                <block type="controls_repeat_ext"></block>
+                <block type="logic_compare"></block>
+                <block type="math_number"></block>
+                <block type="math_arithmetic"></block>
+                <block type="text"></block>
+                <block type="text_print"></block>
+            </xml>
 
-    <div id="textarea"></div>
-    <div id="controls">
-        <button id="runbutton">Run Script</button>
+            <div id="textarea"></div>
+        </div>
     </div>
     <script>
         // inject Blockly into the blocklyDiv

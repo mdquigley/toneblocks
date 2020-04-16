@@ -4,6 +4,24 @@ body {
     flex-direction: row;
 }
 
+#transport {
+    height: 100px;
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#transport>h2 {
+    padding-left: 25px;
+    padding-right: 50px;
+}
+
+#canvas {
+    display: flex;
+    flex-direction: row;
+}
+
 #textarea {
     width: 500px;
     height: 478px;
@@ -13,5 +31,21 @@ body {
 }
 
 #controls {
+    display: flex;
+    flex-direction: row;
     margin-left: 5px;
+}
+
+#tempoControl {
+    padding-right: 25px;
+}
+
+#tempoDisplay {
+    display: flex;
+    flex-direction: row;
+}
+
+#tempoNumber {
+    width: 50px;
+    margin-left: 25px;
 }
