@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequencer</title>
+    <script src="node_modules/tone/build/Tone.js"></script>
+    <script src="node_modules/blockly/blockly_compressed.js"></script>
+    <script src="node_modules/blockly/blocks_compressed.js"></script>
+    <script src="node_modules/blockly/javascript_compressed.js"></script>
+    <script src="node_modules/blockly/msg/en.js"></script>
+    <script src="mq_blocks/mq_sequencer.js"></script>
+    <script src="mq_blocks/mq_generators.js"></script>
+</head>
+
+<body>
+    <button type="button" id="start">Start</button>
+    <button type="button" id="stop">Stop</button><br />
+
+    <input type="range" id="tempo" min="40" max="300" value="120"><br />
+    <input type="number" id="pitch1" value="60"><br />
+    <input type="number" id="pitch2" value="64"><br />
+    <input type="number" id="pitch3" value="67"><br />
+    <input type="number" id="pitch4" value="71"><br /><br />
+
+    <!-- create empty div for blockly -->
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <xml id="toolbox" style="display: none">
+        <block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="logic_compare"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+        <block type="mq_sequencer"></block>
+    </xml>
+
+    <script>
+        // inject Blockly into workspace
+        const workspace = Blockly.inject('blocklyDiv', { toolbox: document.getElementById('toolbox') });
+
+        Blockly.JavaScript.addReservedWords('code');
+        const code = Blockly.JavaScript.workspaceToCode(workspace);
+        try {
+            eval(code);
+        } catch (e) {
+            alert(e);
+        }
+
+        // Assign variables to pitch number boxes
+        const pitch1 = document.getElementById('pitch1');
+        const pitch2 = document.getElementById('pitch2');
+        const pitch3 = document.getElementById('pitch3');
+        const pitch4 = document.getElementById('pitch4');
+
+        // Set initial note values to MIDI values in number box
+        let note1 = Tone.Frequency(pitch1.value, 'midi');
+        let note2 = Tone.Frequency(pitch2.value, 'midi');
+        let note3 = Tone.Frequency(pitch3.value, 'midi');
+        let note4 = Tone.Frequency(pitch4.value, 'midi');
+
+        // monitor number boxes for change, update note value, and update notes in sequence
+        pitch1.addEventListener('change', () => {
+            note1 = Tone.Frequency(pitch1.value, 'midi');
+            seq.set({
+                events: [note1, note2, note3, note4]
+            });
+        });
+        pitch2.addEventListener('change', () => {
+            note2 = Tone.Frequency(pitch2.value, 'midi');
+            seq.set({
+                events: [note1, note2, note3, note4]
+            });
+        });
+        pitch3.addEventListener('change', () => {
+            note3 = Tone.Frequency(pitch3.value, 'midi');
+            seq.set({
+                events: [note1, note2, note3, note4]
+            });
+        });
+        pitch4.addEventListener('change', () => {
+            note4 = Tone.Frequency(pitch4.value, 'midi');
+            seq.set({
+                events: [note1, note2, note3, note4]
+            });
+        });
+
+        // create synth and setup sequence
+        const synth1 = new Tone.Synth().toDestination();
+        const seq = new Tone.Sequence((time, note) => {
+            synth1.triggerAttackRelease(note, '8n', time);
+        }, [note1, note2, note3, note4]).start(0);
+
+        // set tempo for transport and monitor for change
+        const tempo = document.getElementById('tempo');
+        tempo.addEventListener('change', () => {
+            Tone.Transport.bpm.value = tempo.value;
+        });
+
+        // start on click, set initial tempo
+        const start = document.getElementById('start');
+        start.addEventListener('click', async () => {
+            await Tone.start();
+            Tone.Transport.bpm.value = tempo.value;
+            Tone.Transport.start();
+        });
+
+        // stop on click
+        const stop = document.getElementById('stop');
+        stop.addEventListener('click', () => {
+            Tone.Transport.stop();
+        });
+    </script>
+
+
+</body>
+
+</html>

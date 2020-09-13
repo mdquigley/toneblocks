@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"noUnusedLocals": false,
+		"target": "es2015",
+		"module": "commonjs",
+		"experimentalDecorators": true,
+		"lib": ["ES2019", "dom"],
+		"baseUrl": ".",
+		"paths": {
+			"@tonejs/gui": ["src/gui/index"]
+			// "tone" : ["../../Tone.js"]
+		}
+	}
+}

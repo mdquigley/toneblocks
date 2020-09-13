@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seq-Block</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="node_modules/tone/build/Tone.js"></script>
+    <script src="node_modules/@tonejs/ui/build/tone-ui.js"></script>
+    <script src="node_modules/blockly/blockly_compressed.js"></script>
+    <script src="node_modules/blockly/blocks_compressed.js"></script>
+    <script src="node_modules/blockly/javascript_compressed.js"></script>
+    <script src="node_modules/blockly/msg/en.js"></script>
+    <script src="mq_blocks/mq_sequencer.js"></script>
+    <script src="mq_blocks/mq_8step.js"></script>
+</head>
+
+<body>
+    <!-- <button type="button" id="start">Start</button> -->
+    <!-- <button type="button" id="stop">Stop</button><br /> -->
+
+    <div class="controls">
+        <button type="button" id="run" data-on="false">Start</button><br />
+        <label for="tempo">Tempo</label>
+        <input type="range" name="tempo" id="tempo" min="40" max="300" value="120"><br />
+        <div id="visualizer"></div>
+    </div>
+
+    <!-- create empty div for blockly -->
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <xml id="toolbox" style="display: none">
+        <block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="logic_compare"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+        <block type="mq_sequencer"></block>
+        <block type="mq_8step"></block>
+    </xml>
+
+    <div id="textarea"></div>
+
+    <script>
+
+        const glob = 'GLOBAL VAIRABLE';
+        // let synthList = [];
+
+
+        // inject Blockly into workspace
+        const workspace = Blockly.inject('blocklyDiv', { toolbox: document.getElementById('toolbox') });
+        workspace.createVariable('synthList', 'array');
+
+        // set tempo for transport and monitor for change
+        const tempo = document.getElementById('tempo');
+        tempo.addEventListener('change', () => {
+            Tone.Transport.bpm.value = tempo.value;
+        });
+
+        // start on click, set initial tempo
+        // const start = document.getElementById('start');
+        // start.addEventListener('click', runCode);
+
+        // stop on click
+        // const stop = document.getElementById('stop');
+        // stop.addEventListener('click', () => {
+        //     Tone.Transport.stop();
+        // });
+
+        const run = document.getElementById('run');
+        run.addEventListener('click', () => {
+            if (run.dataset.on == 'false') {
+                runCode();
+                run.dataset.on = true;
+                run.innerText = 'Stop';
+            } else {
+                Tone.Transport.stop();
+                run.dataset.on = false;
+                run.innerText = 'Start';
+            }
+        })
+
+        // update textarea function
+        function updateTextArea(event) {
+            // convert workspace to text code
+            let textCode = Blockly.JavaScript.workspaceToCode(workspace);
+            //update textarea div with text code
+            document.getElementById('textarea').innerText = textCode;
+        }
+        // add change listener to textarea, call update function
+        workspace.addChangeListener(updateTextArea);
+
+        const toneWaveform = new Tone.Waveform();
+        Tone.Destination.connect(toneWaveform);
+        waveform({
+            tone: toneWaveform,
+            parent: document.querySelector("#visualizer")
+        })
+
+
+        // Generate JavaScript code and run it
+        async function runCode() {
+
+            await Tone.start();
+            // prevent infinite loop
+            window.LoopTrap = 1000;
+            Blockly.JavaScript.INFINITE_LOOP_TRAP =
+                'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+
+            // convert workspace to text code
+            Blockly.JavaScript.addReservedWords('code');
+            const code = Blockly.JavaScript.workspaceToCode(workspace);
+
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+            // test adding Tone synth trigger
+            wrapCode = code + 'Tone.Transport.bpm.value = tempo.value;\n'
+                + 'Tone.Transport.start();';
+
+
+            // evaluate code
+            try {
+                eval(wrapCode);
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

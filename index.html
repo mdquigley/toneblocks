@@ -1,0 +1,104 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Testing Tone.js</title>
+        <!-- code-along to Tone.js intro page: https://tonejs.github.io/ -->
+    </head>
+    <body>
+        <script src="./node_modules/tone/build/Tone.js"></script>
+        <p>figuring this out, woo</p>
+
+        <!-- Hello Tone -->
+        <!-- <button id="play-button">Hello Tone</button>
+        <script>
+            const playhello = document.getElementById('play-button');
+            const synthhello = new Tone.Synth().toDestination();
+            
+            playhello.addEventListener('click', () => {
+                synthhello.triggerAttackRelease('C4', '8n');     
+            });
+        </script> -->
+
+        <!-- Tone Synth -->
+        <button id='synth-button'>Tone Synth</button>
+        <script>
+            // LOOPING
+            // const synthA = new Tone.FMSynth().toDestination();
+            // const synthB = new Tone.AMSynth().toDestination();
+
+            // const loopA = new Tone.Loop(time => {
+            //     synthA.triggerAttackRelease('C3', '8n', time);
+            // }, '4n').start(0);
+
+            // const loopB = new Tone.Loop(time => {
+            //     synthB.triggerAttackRelease('A4', '8n', time);
+            // }, '4n').start('8n');
+
+            // Tone.Transport.start();
+            // Tone.Transport.bpm.rampTo(800, 10);
+
+            // Tone.Transport.stop();
+
+
+            // POLY SYNTH
+            // const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+            // const now = Tone.now();
+            // synth.triggerAttack('D4', now);
+            // synth.triggerAttack('F4', now + 0.5);
+            // synth.triggerAttack('A4', now + 1);
+            // synth.triggerAttack('C5', now + 1.5);
+            // synth.triggerAttack('E5', now + 2);
+            // synth.triggerRelease(['D4', 'F4', 'A4', 'C5', 'E5'], now + 4);
+
+            // SAMPLES
+            // const player = new Tone.Player('https://tonejs.github.io/audio/berklee/gong_1.mp3').toDestination();
+            // Tone.loaded().then(() => {
+            //     player.start();
+            // });
+            
+            // SAMPLER
+            // const sampler = new Tone.Sampler({
+            //     urls: {
+            //         'C4': 'C4.mp3',
+            //         'D#4': 'Ds4.mp3',
+            //         'F#4': 'Fs4.mp3',
+            //         'A4': 'A4.mp3'
+            //     },
+            //     release: 1,
+            //     baseUrl: 'https://tonejs.github.io/audio/salamander/'
+            // }).toDestination();
+
+            // Tone.loaded().then(() => {
+            //     sampler.triggerAttackRelease(['Eb4', 'G4', 'Bb4'], 4);
+            // })
+
+            // EFFECTS
+            // const player = new Tone.Player({
+            //     url: 'https://tonejs.github.io/audio/berklee/gurgling_theremin_1.mp3',
+            //     loop: true,
+            //     autostart: true
+            // });
+
+            // const distortion = new Tone.Distortion(0.4).toDestination();
+            // player.connect(distortion);
+            
+            // const player = new Tone.Player({
+            //     url: 'https://tonejs.github.io/audio/drum-samples/loops/ominous.mp3',
+            //     autostart: true
+            // });
+            // const filter = new Tone.Filter(400, 'lowpass').toDestination();
+            // const feedbackDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
+
+            // // serial connnection of effects
+            // player.connect(feedbackDelay);
+            // feedbackDelay.connect(filter);
+
+            // SIGNALS
+            // const osc = new Tone.Oscillator().toDestination();
+            // osc.frequency.value = 'C4';
+            // osc.frequency.rampTo('C2', 2);
+            // osc.start().stop('+3');
+        </script>
+    </body>
+</html>

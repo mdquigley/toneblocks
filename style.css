@@ -1,0 +1,15 @@
+.controls {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    align-items: center;
+}
+
+.controls label{
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+.controls #visualizer {
+    padding-left: 20px;
+}

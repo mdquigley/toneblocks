@@ -1,0 +1,17 @@
+{
+  "name": "tonejs-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tonejs/ui": "^0.1.5",
+    "blockly": "^3.20200625.2",
+    "tone": "^14.7.39"
+  }
+}
