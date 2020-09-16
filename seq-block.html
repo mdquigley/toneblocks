@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seq-Block</title>
     <link rel="stylesheet" href="style.css">
-    <script src="node_modules/tone/build/Tone.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="node_modules/@tonejs/ui/build/tone-ui.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="node_modules/blockly/blockly_compressed.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="node_modules/blockly/blocks_compressed.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="node_modules/blockly/javascript_compressed.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="node_modules/blockly/msg/en.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="mq_blocks/mq_sequencer.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="mq_blocks/mq_8step.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="node_modules/tone/build/Tone.js"></script>
+    <script src="node_modules/@tonejs/ui/build/tone-ui.js"></script>
+    <script src="node_modules/blockly/blockly_compressed.js"></script>
+    <script src="node_modules/blockly/blocks_compressed.js"></script>
+    <script src="node_modules/blockly/javascript_compressed.js"></script>
+    <script src="node_modules/blockly/msg/en.js"></script>
+    <script src="mq_blocks/mq_sequencer.js"></script>
+    <script src="mq_blocks/mq_8step.js"></script>
+    <script src="mq_blocks/mq_instrument.js"></script>
+    <script src="mq_blocks/mq_chord.js"></script>
 </head>
 
 <body>
@@ -30,6 +32,10 @@
     <!-- create empty div for blockly -->
     <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
     <xml id="toolbox" style="display: none">
+        <block type="mq_instrument"></block>
+        <block type="mq_chord"></block>
+        <block type="mq_sequencer"></block>
+        <block type="mq_8step"></block>
         <block type="controls_if"></block>
         <block type="controls_repeat_ext"></block>
         <block type="logic_compare"></block>
@@ -37,8 +43,6 @@
         <block type="math_arithmetic"></block>
         <block type="text"></block>
         <block type="text_print"></block>
-        <block type="mq_sequencer"></block>
-        <block type="mq_8step"></block>
     </xml>
 
     <div id="textarea"></div>
@@ -99,11 +103,84 @@
             parent: document.querySelector("#visualizer")
         })
 
+        // load piano samples 
+        const piano = new Tone.Sampler({
+            urls: {
+                A0: "A0.mp3",
+                C1: "C1.mp3",
+                "D#1": "Ds1.mp3",
+                "F#1": "Fs1.mp3",
+                A1: "A1.mp3",
+                C2: "C2.mp3",
+                "D#2": "Ds2.mp3",
+                "F#2": "Fs2.mp3",
+                A2: "A2.mp3",
+                C3: "C3.mp3",
+                "D#3": "Ds3.mp3",
+                "F#3": "Fs3.mp3",
+                A3: "A3.mp3",
+                C4: "C4.mp3",
+                "D#4": "Ds4.mp3",
+                "F#4": "Fs4.mp3",
+                A4: "A4.mp3",
+                C5: "C5.mp3",
+                "D#5": "Ds5.mp3",
+                "F#5": "Fs5.mp3",
+                A5: "A5.mp3",
+                C6: "C6.mp3",
+                "D#6": "Ds6.mp3",
+                "F#6": "Fs6.mp3",
+                A6: "A6.mp3",
+                C7: "C7.mp3",
+                "D#7": "Ds7.mp3",
+                "F#7": "Fs7.mp3",
+                A7: "A7.mp3",
+                C8: "C8.mp3"
+            },
+            release: 1,
+            baseUrl: "salamander/",
+            onload: () => {
+                console.log('piano loaded');
+            }
+        }).toDestination();
+
+        const casio = new Tone.Sampler({
+            urls: {
+                A1: "A1.mp3",
+                A2: "A2.mp3",
+                "A#1": "As1.mp3",
+                B1: "B1.mp3",
+                C2: "C2.mp3",
+                "C#2": "Cs2.mp3",
+                D2: "D2.mp3",
+                "D#2": "Ds2.mp3",
+                E2: "E2.mp3",
+                F2: "F2.mp3",
+                "F#2": "Fs2.mp3",
+                G2: "G2.mp3",
+                "G#1": "Gs1.mp3"
+
+            },
+            release: 1,
+            baseUrl: "casio/",
+            onload: () => {
+                console.log('casio loaded');
+            }
+        }).toDestination();
+
+
+
+
+
+
+
+
 
         // Generate JavaScript code and run it
         async function runCode() {
 
             await Tone.start();
+
             // prevent infinite loop
             window.LoopTrap = 1000;
             Blockly.JavaScript.INFINITE_LOOP_TRAP =
@@ -116,8 +193,8 @@
             Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
             // test adding Tone synth trigger
-            wrapCode = code + 'Tone.Transport.bpm.value = tempo.value;\n'
-                + 'Tone.Transport.start();';
+            wrapCode = code + `Tone.Transport.bpm.value = tempo.value;
+            Tone.Transport.start();`
 
 
             // evaluate code
