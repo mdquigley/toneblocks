@@ -30,8 +30,12 @@ Blockly.JavaScript['mq_chord'] = function (block) {
         }
 
     }
-
-
+    //console.log(block.getTopStackBlock().getDescendants());
+    let stack = block.getTopStackBlock().getDescendants();
+    let count = 0;
+    for (let i = 1; i < stack.length; i++) {
+        count = count + stack[i].getFieldValue('beat');
+    }
     // try {
     //     if (block.type == 'mq_chord' && block.getPreviousBlock().type == 'mq_chord') {
     //         let assigned_beat = block.getPreviousBlock().getFieldValue('beat');
