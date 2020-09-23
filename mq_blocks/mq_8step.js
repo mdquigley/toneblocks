@@ -52,7 +52,7 @@ Blockly.JavaScript['mq_8step'] = function (block) {
     const code = `const ${synthName} = new Tone.Synth().toDestination();
 const ${synthName}Seq = new Tone.Sequence((time, note) => {
 ${synthName}.triggerAttackRelease(note, "8n", time);
-}, [[Tone.Frequency(${note1}, "midi"), Tone.Frequency(${note2}, "midi")], [Tone.Frequency(${note3}, "midi"), Tone.Frequency(${note4}, "midi")], [Tone.Frequency(${note5}, "midi"), Tone.Frequency(${note6}, "midi")], [Tone.Frequency(${note7}, "midi"), Tone.Frequency(${note8}, "midi")]]).start(0);
+}, [Tone.Frequency(${note1}, "midi"), Tone.Frequency(${note2}, "midi"), Tone.Frequency(${note3}, "midi"), Tone.Frequency(${note4}, "midi"), Tone.Frequency(${note5}, "midi"), Tone.Frequency(${note6}, "midi"), Tone.Frequency(${note7}, "midi"), Tone.Frequency(${note8}, "midi")]).start(0);
 run.addEventListener('click', () => {
     ${synthName}.dispose();
 });`;
