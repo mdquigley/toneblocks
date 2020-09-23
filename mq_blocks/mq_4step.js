@@ -1,4 +1,4 @@
-Blockly.Blocks['mq_sequencer'] = {
+Blockly.Blocks['mq_4step'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("Sequencer");
@@ -23,7 +23,7 @@ Blockly.Blocks['mq_sequencer'] = {
     }
 };
 
-Blockly.JavaScript['mq_sequencer'] = function (block) {
+Blockly.JavaScript['mq_4step'] = function (block) {
     let note1 = Blockly.JavaScript.valueToCode(block, 'VALUE1', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '\'\'';
     let note2 = Blockly.JavaScript.valueToCode(block, 'VALUE2', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '\'\'';
     let note3 = Blockly.JavaScript.valueToCode(block, 'VALUE3', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '\'\'';
