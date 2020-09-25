@@ -38,8 +38,12 @@ Blockly.JavaScript['mq_sequence'] = function (block) {
         }
 
     });
+
+
     console.log(sequence);
     console.log(mapSeq);
+
+
 
 
     // const testSynth = new Tone.Synth().toDestination();

@@ -12,6 +12,8 @@
     <script src="node_modules/blockly/blocks_compressed.js"></script>
     <script src="node_modules/blockly/javascript_compressed.js"></script>
     <script src="node_modules/blockly/msg/en.js"></script>
+    <script src="mq_blocks/mq_synth.js"></script>
+    <script src="mq_blocks/mq_step.js"></script>
     <script src="mq_blocks/mq_4step.js"></script>
     <script src="mq_blocks/mq_8step.js"></script>
     <script src="mq_blocks/mq_instrument.js"></script>
@@ -33,6 +35,8 @@
     <!-- create empty div for blockly -->
     <div id="blocklyDiv" style="height: 480px; width: 1000px;"></div>
     <xml id="toolbox" style="display: none">
+        <block type="mq_synth"></block>
+        <block type="mq_step"></block>
         <block type="mq_instrument"></block>
         <block type="mq_chord"></block>
         <block type="mq_sequence"></block>
