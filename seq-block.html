@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- test git change -->
 
 <head>
     <meta charset="UTF-8">
@@ -54,13 +55,14 @@
     <div id="textarea"></div>
 
     <script>
-
         const glob = 'GLOBAL VAIRABLE';
         // let synthList = [];
 
 
         // inject Blockly into workspace
-        const workspace = Blockly.inject('blocklyDiv', { toolbox: document.getElementById('toolbox') });
+        const workspace = Blockly.inject('blocklyDiv', {
+            toolbox: document.getElementById('toolbox')
+        });
         workspace.createVariable('synthList', 'array');
 
         // set tempo for transport and monitor for change
@@ -174,6 +176,13 @@
             }
         }).toDestination();
 
+        let sequences = {};
+        function updateNotes(name) {
+            name.set({
+                events: sequences[name]
+            });
+        }
+
 
 
 
@@ -210,12 +219,6 @@
                 alert(e);
             }
         }
-
-
-
-
-
-
     </script>
 
 

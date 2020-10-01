@@ -1,28 +1,65 @@
 Blockly.Blocks['mq_step'] = {
     init: function () {
-        this.appendDummyInput()
-            .appendField("Step");
-        this.appendValueInput("pitch")
-            .setCheck(["Number", "-"])
-            .appendField("Pitch");
-        this.appendValueInput("velocity")
-            .setCheck("Number")
-            .appendField("Velocity");
+        this.appendValueInput('PITCH1')
+            .setCheck('Number')
+            .appendField('Note 1');
+        this.appendValueInput('PITCH2')
+            .setCheck('Number')
+            .appendField('Note 2');
+        this.appendValueInput('PITCH3')
+            .setCheck('Number')
+            .appendField('Note 3');
+        this.appendValueInput('PITCH4')
+            .setCheck('Number')
+            .appendField('Note 4');
         this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(230);
-        this.setTooltip("");
-        this.setHelpUrl("");
+        this.setOutput(false);
+        this.setColour(160);
     }
 };
 
 Blockly.JavaScript['mq_step'] = function (block) {
-    const pitch = Blockly.JavaScript.valueToCode(block, 'pitch', Blockly.JavaScript.ORDER_ATOMIC);
-    const velocity = Blockly.JavaScript.valueToCode(block, 'velocity', Blockly.JavaScript.ORDER_ATOMIC);
+    let note1 = Blockly.JavaScript.valueToCode(block, 'PITCH1', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
+    let note2 = Blockly.JavaScript.valueToCode(block, 'PITCH2', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
+    let note3 = Blockly.JavaScript.valueToCode(block, 'PITCH3', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
+    let note4 = Blockly.JavaScript.valueToCode(block, 'PITCH4', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
+    let code = "";
+    let sampler;
 
-    let synthName = block.getTopStackBlock().getFieldValue('name');
+    const topBlock = block.getTopStackBlock();
+    if (topBlock) {
+        sampler = topBlock.getFieldValue('name');
+    }
 
-    const code = `${synthName}Seq.push(${pitch});\n`;
+    sequences[sampler] = [(note1 ? Tone.Frequency(note1, "midi") : null), (note2 ? Tone.Frequency(note2, "midi") : null), (note3 ? Tone.Frequency(note3, "midi") : null), (note4 ? Tone.Frequency(note4, "midi") : null)];
+
+    // function updateNotes() {
+    //     notes = [Tone.Frequency(note1, "midi"), Tone.Frequency(note2, "midi"), Tone.Frequency(note3, "midi"), Tone.Frequency(note4, "midi")];
+    //     console.log("ran updateNotes");
+    // }
+
+
+
+    code = `function ${sampler}UpdateNotes(seq) {
+        seq.set({events: sequences['${sampler}']});
+    }
+            let ${sampler}Seq = new Tone.Sequence((time, note) => {
+                ${sampler}.triggerAttackRelease(note, "8n", time);
+                ${sampler}UpdateNotes(${sampler}Seq);
+            }, sequences['${sampler}']).start(0);
+        `;
+
+    // let ${sampler}Update = new Tone.Loop((time, note) => {
+    //     updateNotes();
+    //     ${sampler}Seq.set({events: notes});
+    // })
+    // code = `let notes = [Tone.Frequency(${note1}, "midi"), Tone.Frequency(${note2}, "midi"), Tone.Frequency(${note3}, "midi"), Tone.Frequency(${note4}, "midi")];
+    // const loop = new Tone.Loop((time) => {
+    //         let ${sampler}Seq = new Tone.Pattern((time, note) => {
+    //         }, notes, "up");
+    //         ${sampler}Seq.set({events: notes});
+    //     }, "4n").start(0);
+    //     `;
 
 
     return code;

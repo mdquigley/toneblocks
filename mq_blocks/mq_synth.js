@@ -20,8 +20,11 @@ Blockly.JavaScript['mq_synth'] = function (block) {
     const wavetype = block.getFieldValue('wavetype');
 
     const code = `const ${synthName} = new Tone.Synth().toDestination();
-    ${synthName}.oscillator = '${wavetype}';
-    let ${synthName}Seq = [];
+    ${synthName}.set({
+        oscillator: {
+            type: '${wavetype}'
+        }
+    });
     run.addEventListener('click', () => {
         ${synthName}.dispose();
     });\n`;
