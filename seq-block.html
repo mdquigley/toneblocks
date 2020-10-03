@@ -20,6 +20,8 @@
     <script src="mq_blocks/mq_instrument.js"></script>
     <script src="mq_blocks/mq_chord.js"></script>
     <script src="mq_blocks/mq_sequence.js"></script>
+    <script src="mq_blocks/mq_step_proxy.js"></script>
+
 </head>
 
 <body>
@@ -54,6 +56,7 @@
 
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
         <category name="Music" categorystyle="music_category">
+            <block type="mq_step_proxy"></block>
             <block type="mq_synth"></block>
             <block type="mq_step"></block>
             <block type="mq_instrument"></block>
@@ -526,10 +529,17 @@
         }).toDestination();
 
         let sequences = {};
-        function updateNotes(name) {
-            name.set({
-                events: sequences[name]
-            });
+        let sequencesProxy = new Proxy(sequences, {
+            get: (o, property) => {
+                return property in o ? JSON.stringify(o) : null;
+            },
+            set: (o, property, value) => {
+                o[property] = value;
+            }
+        });
+
+        function getNotes(name, seq) {
+
         }
 
 
@@ -558,7 +568,8 @@
 
             // test adding Tone synth trigger
             wrapCode = code + `Tone.Transport.bpm.value = tempo.value;
-            Tone.Transport.start();`
+            Tone.Transport.start();
+            `
 
 
             // evaluate code
@@ -568,6 +579,11 @@
                 alert(e);
             }
         }
+
+        // function readNote(note) {
+        //     return (note ? Tone.Frequency(eval(note), "midi") : null);
+        // }
+
     </script>
 
 

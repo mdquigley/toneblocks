@@ -31,7 +31,9 @@ Blockly.JavaScript['mq_step'] = function (block) {
         sampler = topBlock.getFieldValue('name');
     }
 
-    sequences[sampler] = [(note1 ? Tone.Frequency(note1, "midi") : null), (note2 ? Tone.Frequency(note2, "midi") : null), (note3 ? Tone.Frequency(note3, "midi") : null), (note4 ? Tone.Frequency(note4, "midi") : null)];
+    sequences[sampler] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null)];
+
+    // sequences[sampler] = [(note1 ? Tone.Frequency(note1, "midi") : null), (note2 ? Tone.Frequency(note2, "midi") : null), (note3 ? Tone.Frequency(note3, "midi") : null), (note4 ? Tone.Frequency(note4, "midi") : null)];
 
     // function updateNotes() {
     //     notes = [Tone.Frequency(note1, "midi"), Tone.Frequency(note2, "midi"), Tone.Frequency(note3, "midi"), Tone.Frequency(note4, "midi")];
@@ -40,14 +42,25 @@ Blockly.JavaScript['mq_step'] = function (block) {
 
 
 
-    code = `function ${sampler}UpdateNotes(seq) {
-        seq.set({events: sequences['${sampler}']});
-    }
+    code = `
+            function ${sampler}UpdateNotes(seq) {
+                seq.set({events: sequences['${sampler}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))});
+            }
+            
             let ${sampler}Seq = new Tone.Sequence((time, note) => {
+             
                 ${sampler}.triggerAttackRelease(note, "8n", time);
                 ${sampler}UpdateNotes(${sampler}Seq);
-            }, sequences['${sampler}']).start(0);
+              
+            }, sequences['${sampler}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))).start(0);
         `;
+
+    // function ${sampler}UpdateNotes(seq) {
+
+    //     sequences['${sampler}'] = [(${Blockly.JavaScript.valueToCode(block, 'PITCH1', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null} ? Tone.Frequency(${Blockly.JavaScript.valueToCode(block, 'PITCH1', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null}, "midi") : null), (${note2}? Tone.Frequency(${note2}, "midi") : null), (${note3} ? Tone.Frequency(${note3}, "midi") : null), (${note4} ? Tone.Frequency(${note4}, "midi") : null)];
+
+    //      seq.set({events: sequences['${sampler}']});
+    //  }
 
     // let ${sampler}Update = new Tone.Loop((time, note) => {
     //     updateNotes();
