@@ -14,7 +14,6 @@
     <script src="node_modules/blockly/javascript_compressed.js"></script>
     <script src="node_modules/blockly/msg/en.js"></script>
     <script src="mq_blocks/mq_synth.js"></script>
-    <script src="mq_blocks/mq_step.js"></script>
     <script src="mq_blocks/mq_4step.js"></script>
     <script src="mq_blocks/mq_8step.js"></script>
     <script src="mq_blocks/mq_instrument.js"></script>
@@ -526,18 +525,16 @@
         }).toDestination();
 
         let sequences = {};
-        let sequencesProxy = new Proxy(sequences, {
-            get: (o, property) => {
-                return property in o ? JSON.stringify(o) : null;
-            },
-            set: (o, property, value) => {
-                o[property] = value;
-            }
-        });
+        // let sequencesProxy = new Proxy(sequences, {
+        //     get: (o, property) => {
+        //         return property in o ? JSON.stringify(o) : null;
+        //     },
+        //     set: (o, property, value) => {
+        //         o[property] = value;
+        //     }
+        // });
 
-        function getNotes(name, seq) {
-
-        }
+        let synths = {};
 
 
 

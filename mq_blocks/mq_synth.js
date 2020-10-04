@@ -17,14 +17,18 @@ Blockly.Blocks['mq_synth'] = {
 
 Blockly.JavaScript['mq_synth'] = function (block) {
     const synthName = block.getFieldValue('name');
-    const wavetype = block.getFieldValue('wavetype');
+    const waveType = block.getFieldValue('wavetype');
+    synths[synthName] = waveType;
 
-    const code = `const ${synthName} = new Tone.Synth().toDestination();
-    ${synthName}.set({
-        oscillator: {
-            type: '${wavetype}'
+    const code = `const ${synthName} = new Tone.Synth({oscillator: {type: '${synths[synthName]}'}}).toDestination();
+    
+    function ${synthName}ChangeType() {
+        if (${synthName}.oscillator.type !== synths['${synthName}']) {
+            ${synthName}.set({oscillator: {type: synths['${synthName}']}});
         }
-    });
+    }
+    setInterval(${synthName}ChangeType, 1000);
+
     run.addEventListener('click', () => {
         ${synthName}.dispose();
     });\n`;
