@@ -36,6 +36,11 @@ Blockly.JavaScript['mq_4step'] = function (block) {
         synth = topBlock.getFieldValue('name');
     }
 
+    // '4n' = [x,x,x,x]
+    // '8n' = [[x,x],[x,x]]
+    // '16n' = [[x,x,x,x]]
+
+
     sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null)];
 
     noteLengths[synth] = length;
