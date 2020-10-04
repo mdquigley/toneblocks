@@ -27,6 +27,8 @@ Blockly.JavaScript['mq_ampenv'] = function (block) {
     let code = "";
     let synth;
 
+    console.log(attack);
+
     const topBlock = block.getTopStackBlock();
     if (topBlock) {
         synth = topBlock.getFieldValue('name');
@@ -34,10 +36,10 @@ Blockly.JavaScript['mq_ampenv'] = function (block) {
 
     ampenvs[synth] = {
         envelope: {
-            attack: parseFloat(attack),
-            decay: parseFloat(decay),
-            sustain: parseFloat(sustain),
-            release: parseFloat(release)
+            attack: parseFloat(eval(attack)),
+            decay: parseFloat(eval(decay)),
+            sustain: parseFloat(eval(sustain)),
+            release: parseFloat(eval(release))
         }
     }
 
@@ -51,10 +53,10 @@ Blockly.JavaScript['mq_ampenv'] = function (block) {
                 ${synth}.set(ampenvs['${synth}']);
              }
             ${synth}.set({envelope: {
-                attack: ${attack},
-                decay: ${decay},
-                sustain: ${sustain},
-                release: ${release}
+                attack: eval(${attack}),
+                decay: eval(${decay}),
+                sustain: eval(${sustain}),
+                release: eval(${release})
             }});
             setInterval(${synth}AmpEnv, 1000);
             `;
