@@ -7,9 +7,9 @@ Blockly.Blocks['mq_synth'] = {
             .appendField(new Blockly.FieldTextInput("synth1"), "name");
         this.appendDummyInput()
             .appendField("wave type")
-            .appendField(new Blockly.FieldDropdown([["sine", "sine"], ["square", "square"], ["triangle", "triangle"]]), "wavetype");
+            .appendField(new Blockly.FieldDropdown([["sine", "sine"], ["square", "square"], ["triangle", "triangle"], ["sawtooth", "sawtooth"]]), "wavetype");
         this.setNextStatement(true, null);
-        this.setColour(230);
+        this.setColour(180);
         this.setTooltip("");
         this.setHelpUrl("");
     }

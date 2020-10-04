@@ -26,7 +26,7 @@ Blockly.Blocks['mq_8step'] = {
             .appendField('Note 8');
         this.setPreviousStatement(true, null);
         this.setOutput(false);
-        this.setColour(160);
+        this.setColour(210);
     }
 };
 
@@ -42,26 +42,26 @@ Blockly.JavaScript['mq_8step'] = function (block) {
 
 
     let code = "";
-    let sampler;
+    let synth;
 
     const topBlock = block.getTopStackBlock();
     if (topBlock) {
-        sampler = topBlock.getFieldValue('name');
+        synth = topBlock.getFieldValue('name');
     }
 
-    sequences[sampler] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null), (note5 ? note5 : null), (note6 ? note6 : null), (note7 ? note7 : null), (note8 ? note8 : null)];
+    sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null), (note5 ? note5 : null), (note6 ? note6 : null), (note7 ? note7 : null), (note8 ? note8 : null)];
 
     code = `
-            function ${sampler}UpdateNotes(seq) {
-                seq.set({events: sequences['${sampler}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))});
+            function ${synth}UpdateNotes(seq) {
+                seq.set({events: sequences['${synth}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))});
             }
             
-            let ${sampler}Seq = new Tone.Sequence((time, note) => {
+            let ${synth}Seq = new Tone.Sequence((time, note) => {
              
-                ${sampler}.triggerAttackRelease(note, "8n", time);
-                ${sampler}UpdateNotes(${sampler}Seq);
+                ${synth}.triggerAttackRelease(note, "8n", time);
+                ${synth}UpdateNotes(${synth}Seq);
               
-            }, sequences['${sampler}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))).start(0);
+            }, sequences['${synth}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))).start(0);
         `;
 
     return code;
