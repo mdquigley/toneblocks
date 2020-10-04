@@ -1,5 +1,9 @@
 Blockly.Blocks['mq_8step'] = {
     init: function () {
+        this.appendDummyInput()
+            .appendField('note length')
+            .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "note length");
+        this.setFieldValue("8n", 'note length');
         this.appendValueInput('PITCH1')
             .setCheck('Number')
             .appendField('Note 1');
@@ -39,6 +43,7 @@ Blockly.JavaScript['mq_8step'] = function (block) {
     let note6 = Blockly.JavaScript.valueToCode(block, 'PITCH6', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
     let note7 = Blockly.JavaScript.valueToCode(block, 'PITCH7', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
     let note8 = Blockly.JavaScript.valueToCode(block, 'PITCH8', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
+    let length = block.getFieldValue('note length');
 
 
     let code = "";
@@ -50,6 +55,7 @@ Blockly.JavaScript['mq_8step'] = function (block) {
     }
 
     sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null), (note5 ? note5 : null), (note6 ? note6 : null), (note7 ? note7 : null), (note8 ? note8 : null)];
+    noteLengths[synth] = length;
 
     code = `
             function ${synth}UpdateNotes(seq) {
@@ -58,7 +64,7 @@ Blockly.JavaScript['mq_8step'] = function (block) {
             
             let ${synth}Seq = new Tone.Sequence((time, note) => {
              
-                ${synth}.triggerAttackRelease(note, "8n", time);
+                ${synth}.triggerAttackRelease(note, noteLengths['${synth}'], time);
                 ${synth}UpdateNotes(${synth}Seq);
               
             }, sequences['${synth}'].map(note => (note ? Tone.Frequency(eval(note), "midi") : null))).start(0);
