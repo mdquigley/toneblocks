@@ -20,7 +20,8 @@
     <script src="mq_blocks/mq_instrument.js"></script>
     <script src="mq_blocks/mq_chord.js"></script>
     <script src="mq_blocks/mq_sequence.js"></script>
-
+    <script src="mq_blocks/mq_4stepToneloop.js"></script>
+    <script src="mq_blocks/mq_8stepToneloop.js"></script>
 </head>
 
 <body>
@@ -56,6 +57,8 @@
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
         <category name="Music" categorystyle="music_category">
             <block type="mq_synth"></block>
+            <block type="mq_4stepToneloop"></block>
+            <block type="mq_8stepToneloop"></block>
             <block type="mq_ampenv"></block>
             <block type="mq_4step"></block>
             <block type="mq_8step"></block>
@@ -413,7 +416,6 @@
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox')
         });
-        workspace.createVariable('synthList', 'array');
 
         // set tempo for transport and monitor for change
         const tempo = document.getElementById('tempo');
@@ -539,8 +541,11 @@
         let synths = {};
         let ampenvs = {};
         let noteLengths = {};
+        let subdivisions = {};
 
-
+        function updateInterval(seq, sub) {
+            seq.interval = sub;
+        }
 
 
 
