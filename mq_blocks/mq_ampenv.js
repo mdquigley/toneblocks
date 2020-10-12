@@ -12,6 +12,7 @@ Blockly.Blocks['mq_ampenv'] = {
         this.appendValueInput('release')
             .setCheck('Number')
             .appendField('release');
+        this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setOutput(false);
@@ -58,7 +59,6 @@ Blockly.JavaScript['mq_ampenv'] = function (block) {
                 sustain: eval(${sustain}),
                 release: eval(${release})
             }});
-            setInterval(${synth}AmpEnv, 1000);
             `;
     }
 
