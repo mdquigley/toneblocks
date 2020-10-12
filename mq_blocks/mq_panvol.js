@@ -26,8 +26,8 @@ Blockly.JavaScript['mq_panvol'] = function (block) {
     }
 
     panvols[synth] = {
-        pan: parseFloat(eval(pan)),
-        volume: parseFloat(eval(volume))
+        pan: pan,
+        volume: volume
 
     }
 
@@ -37,11 +37,11 @@ Blockly.JavaScript['mq_panvol'] = function (block) {
     } else {
 
         code = `
-             function ${synth}ChangePanVol() {
-                ${synth}PanVol.set(panvols['${synth}']);
-             }
+            function ${synth}ChangePanVol() {
+                 ${synth}PanVol.set({pan: eval(panvols['${synth}']['pan']), volume: eval(panvols['${synth}']['volume'])});
+            }
 
-             let ${synth}PanVol = new Tone.PanVol(eval(${pan}), eval(${volume})).toDestination();
+             let ${synth}PanVol = new Tone.PanVol(eval(panvols['${synth}']['pan']), eval(panvols['${synth}']['volume'])).toDestination();
              ${synth}.disconnect();
              ${synth}.connect(${synth}PanVol);
             `;

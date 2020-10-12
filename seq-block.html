@@ -59,10 +59,22 @@
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
         <category name="Music" categorystyle="music_category">
             <block type="mq_synth"></block>
-            <block type="mq_4stepToneloop"></block>
+            <block type="mq_4stepToneloop">
+                <value name="PITCH1">
+                    <shadow type="math_number">
+                        <field name="NUM">60</field>
+                    </shadow>
+                </value>
+            </block>
             <block type="mq_8stepToneloop"></block>
             <block type="mq_ampenv"></block>
-            <block type="mq_panvol"></block>
+            <block type="mq_panvol">
+                <value name="pan">
+                    <shadow type="math_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+            </block>
             <block type="mq_4step"></block>
             <block type="mq_8step"></block>
             <block type="mq_instrument"></block>
@@ -461,7 +473,8 @@
         workspace.addChangeListener(updateTextArea);
 
         const toneWaveform = new Tone.Waveform();
-        Tone.Destination.connect(toneWaveform);
+        const merge = new Tone.Merge().connect(toneWaveform);
+        Tone.Destination.fan(merge);
         waveform({
             tone: toneWaveform,
             parent: document.querySelector("#visualizer")

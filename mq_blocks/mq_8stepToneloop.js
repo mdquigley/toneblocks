@@ -74,7 +74,7 @@ Blockly.JavaScript['mq_8stepToneloop'] = function (block) {
                 ${synth}AmpEnv();
                 updateInterval(${synth}Seq, subdivisions['${synth}']);
                 if (sequences['${synth}'][${synth}Counter % 8] !== null) {
-                    ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 8])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 8]), "midi") : null), '8n', time);
+                    ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 8])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 8]), "midi") : null), '8n');
                 }
                 ${synth}Counter++;
                 
