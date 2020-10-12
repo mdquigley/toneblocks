@@ -22,6 +22,8 @@
     <script src="mq_blocks/mq_sequence.js"></script>
     <script src="mq_blocks/mq_4stepToneloop.js"></script>
     <script src="mq_blocks/mq_8stepToneloop.js"></script>
+    <script src="mq_blocks/mq_panvol.js"></script>
+
 </head>
 
 <body>
@@ -60,6 +62,7 @@
             <block type="mq_4stepToneloop"></block>
             <block type="mq_8stepToneloop"></block>
             <block type="mq_ampenv"></block>
+            <block type="mq_panvol"></block>
             <block type="mq_4step"></block>
             <block type="mq_8step"></block>
             <block type="mq_instrument"></block>
@@ -542,6 +545,7 @@
         let ampenvs = {};
         let noteLengths = {};
         let subdivisions = {};
+        let panvols = {};
 
         function updateInterval(seq, sub) {
             seq.interval = sub;
