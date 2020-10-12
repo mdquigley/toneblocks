@@ -110,7 +110,7 @@
         </category>
         <category name="Math" categorystyle="math_category">
             <block type="math_number" gap="32">
-                <field name="NUM">123</field>
+                <field name="NUM">60</field>
             </block>
             <block type="math_arithmetic">
                 <value name="A">
@@ -417,7 +417,8 @@
 
         // inject Blockly into workspace
         const workspace = Blockly.inject('blocklyDiv', {
-            toolbox: document.getElementById('toolbox')
+            toolbox: document.getElementById('toolbox'),
+            theme: 'Dark'
         });
 
         // set tempo for transport and monitor for change
