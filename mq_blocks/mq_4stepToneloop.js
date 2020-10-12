@@ -5,7 +5,7 @@ Blockly.Blocks['mq_4stepToneloop'] = {
         this.appendDummyInput()
             .appendField('subdivision')
             .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "subdivision");
-        this.setFieldValue("8n", 'subdivision');
+        this.setFieldValue("4n", 'subdivision');
         this.appendValueInput('PITCH1')
             .setCheck('Number')
             .appendField('Note 1');
