@@ -27,8 +27,7 @@ Blockly.JavaScript['mq_synth'] = function (block) {
             ${synthName}.set({oscillator: {type: synths['${synthName}']}});
         }
     }
-    setInterval(${synthName}ChangeType, 1000);
-
+    
     run.addEventListener('click', () => {
         ${synthName}.dispose();
     });\n`;
