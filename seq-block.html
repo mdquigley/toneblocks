@@ -560,14 +560,27 @@
         let noteLengths = {};
         let subdivisions = {};
         let panvols = {};
-
         function updateInterval(seq, sub) {
             seq.interval = sub;
         }
 
 
+        class Synth {
+            constructor() {
+                this.sequence = [];
+                this.maxCount = 4;
+                this.currentCount = 0;
+                this.synth = new Tone.Synth().toDestination();
+            }
+        }
 
-
+        let synth1 = new Synth();
+        synth1.sequence = [60, 64, 67, 71];
+        let loop = new Tone.Loop((time) => {
+            synth1.synth.triggerAttackRelease(Tone.Frequency(synth1.sequence[synth1.currentCount], 'midi'), '8n');
+            synth1.currentCount = synth1.currentCount % synth1.maxCount;
+            synth1.currentCount++;
+        }, '8n').start(0);
 
 
 
