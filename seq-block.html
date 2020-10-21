@@ -61,18 +61,18 @@
             <block type="mq_synth"></block>
             <block type="mq_4stepToneloop">
                 <value name="PITCH1">
-                    <shadow type="math_number">
+                    <block type="math_number">
                         <field name="NUM">60</field>
-                    </shadow>
+                    </block>
                 </value>
             </block>
             <block type="mq_8stepToneloop"></block>
             <block type="mq_ampenv"></block>
             <block type="mq_panvol">
                 <value name="pan">
-                    <shadow type="math_number">
+                    <block type="math_number">
                         <field name="NUM">1</field>
-                    </shadow>
+                    </block>
                 </value>
             </block>
             <block type="mq_4step"></block>
@@ -565,22 +565,28 @@
         }
 
 
-        class Synth {
+        class SynthObj {
             constructor() {
                 this.sequence = [];
+                this.subdivision = '4n';
                 this.maxCount = 4;
                 this.currentCount = 0;
+                this.type = 'sine';
                 this.synth = new Tone.Synth().toDestination();
+                this.updateOsc = () => {
+                    this.synth.set({ oscillator: { type: this.type } });
+                };
             }
         }
 
-        let synth1 = new Synth();
-        synth1.sequence = [60, 64, 67, 71];
-        let loop = new Tone.Loop((time) => {
-            synth1.synth.triggerAttackRelease(Tone.Frequency(synth1.sequence[synth1.currentCount], 'midi'), '8n');
-            synth1.currentCount = synth1.currentCount % synth1.maxCount;
-            synth1.currentCount++;
-        }, '8n').start(0);
+        let synthList = [];
+
+        // let synth1 = new Synth();
+        // synth1.sequence = [60, 64, 67, 71];
+        // let loop = new Tone.Loop((time) => {
+        //     synth1.synth.triggerAttackRelease(Tone.Frequency(synth1.sequence[synth1.currentCount], 'midi'), '8n', "+0.05");
+        //     synth1.currentCount = (synth1.currentCount + 1) % synth1.maxCount;
+        // }, '8n').start(0);
 
 
 

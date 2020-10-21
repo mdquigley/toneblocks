@@ -18,18 +18,35 @@ Blockly.Blocks['mq_synth'] = {
 Blockly.JavaScript['mq_synth'] = function (block) {
     const synthName = block.getFieldValue('name');
     const waveType = block.getFieldValue('wavetype');
-    synths[synthName] = waveType;
 
-    const code = `const ${synthName} = new Tone.Synth({oscillator: {type: '${synths[synthName]}'}}).toDestination();
-    
-    function ${synthName}ChangeType() {
-        if (${synthName}.oscillator.type !== synths['${synthName}']) {
-            ${synthName}.set({oscillator: {type: synths['${synthName}']}});
-        }
-    }
-    
+    let synth = new SynthObj();
+    synth.type = waveType;
+    synth.updateOsc();
+    synthList[`${synthName}`] = synth;
+
     run.addEventListener('click', () => {
-        ${synthName}.dispose();
-    });\n`;
+        synth.synth.dispose();
+        synth.currentCount = 0;
+    });
+
+
+
+
+
+
+    const code = "";
+
+    // `const ${synthName} = new Tone.Synth({oscillator: {type: '${synths[synthName]}'}}).toDestination();
+
+
+    // function ${synthName}ChangeType() {
+    //     if (${synthName}.oscillator.type !== synths['${synthName}']) {
+    //         ${synthName}.set({oscillator: {type: synths['${synthName}']}});
+    //     }
+    // }
+
+    // run.addEventListener('click', () => {
+    //     ${synthName}.dispose();
+    // });\n`;
     return code;
 };

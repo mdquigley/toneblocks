@@ -36,36 +36,24 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
 
     const topBlock = block.getTopStackBlock();
     if (topBlock) {
-        synth = topBlock.getFieldValue('name');
+        let synthName = topBlock.getFieldValue('name');
+        synth = synthList[synthName];
     }
 
-    subdivisions[synth] = subdivision;
+    synth.subdivision = subdivision;
+    synth.sequence = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null)];
 
-    // '4n' = [x,x,x,x]
-    // '8n' = [[x,x],[x,x]]
-    // '16n' = [[x,x,x,x]]
+    let loop = new Tone.Loop((time) => {
+        synth.updateOsc();
+        if (synth.sequence[synth.currentCount] !== null) {
+            synth.synth.triggerAttackRelease(synth.sequence[synth.currentCount] ? Tone.Frequency(synth.sequence[synth.currentCount], 'midi') : null, '8n');
+        }
+        synth.currentCount = (synth.currentCount + 1) % synth.maxCount;
+
+    }, synth.subdivision).start(+0.05);
 
 
-    sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null)];
 
-    noteLengths[synth] = length;
-
-    code = `
-            let ${synth}Counter = 0;
-          
-            let ${synth}Seq = new Tone.Loop((time) => {
-                ${synth}ChangeType();
-                //${synth}AmpEnv();
-                ${synth}ChangePanVol();
-                updateInterval(${synth}Seq, subdivisions['${synth}']);
-                if (sequences['${synth}'][${synth}Counter % 4] !== null) {
-                    ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 4])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 4]), "midi") : null), '8n');
-                
-                }
-                ${synth}Counter++;
-            }, subdivisions['${synth}']).start(0);
-
-        `;
 
 
     return code;
