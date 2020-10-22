@@ -541,6 +541,25 @@
             seq.interval = sub;
         }
 
+        class SynthObj {
+            constructor() {
+                this.sequence = [];
+                this.subdivision = '4n';
+                this.maxCount = 4;
+                this.currentCount = 0;
+                this.wavetype = 'sine';
+                this.synth = new Tone.Synth().toDestination();
+                this.updateOsc = () => {
+                    this.synth.set({ oscillator: { type: this.wavetype } });
+                };
+                this.updateInterval = (loop) => {
+                    loop.interval = this.subdivision;
+                };
+            }
+        }
+
+        let synthList = [];
+
 
 
 
