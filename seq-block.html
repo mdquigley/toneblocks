@@ -390,14 +390,21 @@
     <div id="textarea"></div>
 
     <script>
-        const glob = 'GLOBAL VAIRABLE';
-        // let synthList = [];
 
+        // create new theme based on Dark with music category style
+        const theme = Blockly.Theme.defineTheme('MQ', {
+            'base': Blockly.Themes.Dark,
+            'categoryStyles': {
+                'music_category': {
+                    'colour': '20'
+                }
+            }
+        });
 
         // inject Blockly into workspace
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox'),
-            theme: 'Dark'
+            theme: 'MQ'
         });
 
         // set tempo for transport and monitor for change
