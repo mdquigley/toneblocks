@@ -33,18 +33,17 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
 
     let code = "";
     let synth;
+    let oldSynth;
 
     const topBlock = block.getTopStackBlock();
     if (topBlock) {
         synth = topBlock.getFieldValue('name');
     }
-
     subdivisions[synth] = subdivision;
 
     // '4n' = [x,x,x,x]
     // '8n' = [[x,x],[x,x]]
     // '16n' = [[x,x,x,x]]
-
 
     sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null)];
 
@@ -52,6 +51,9 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
 
     code = `
             let ${synth}Counter = 0;
+        
+          
+            if (${synth} !== null) {
           
             let ${synth}Seq = new Tone.Loop((time) => {
                 ${synth}ChangeType();
@@ -66,6 +68,7 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
                 }
                 ${synth}Counter++;
             }, subdivisions['${synth}']).start(0);
+        }
 
         `;
 
