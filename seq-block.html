@@ -22,7 +22,7 @@
     <script src="mq_blocks/mq_sequence.js"></script>
     <script src="mq_blocks/mq_4stepToneloop.js"></script>
     <script src="mq_blocks/mq_8stepToneloop.js"></script>
-    <script src="mq_blocks/mq_panvol.js"></script>
+    <script src="mq_blocks/mq_volume.js"></script>
     <script src="preload-functions.js"></script>
 
 </head>
@@ -34,7 +34,7 @@
     <div class="controls">
         <button type="button" id="run" data-on="false">Start</button><br />
         <label for="tempo">Tempo</label>
-        <input type="range" name="tempo" id="tempo" min="20" max="400" value="120"><br />
+        <input type="range" name="tempo" id="tempo" min="20" max="260" value="120"><br />
         <div id="visualizer"></div>
     </div>
 
@@ -69,15 +69,10 @@
             </block>
             <block type="mq_8stepToneloop"></block>
             <block type="mq_ampenv"></block>
-            <block type="mq_panvol">
-                <value name="pan">
-                    <block type="math_number">
-                        <field name="NUM">1</field>
-                    </block>
-                </value>
+            <block type="mq_volume">
                 <value name="volume">
                     <block type="math_number">
-                        <field name="NUM">-3</field>
+                        <field name="NUM">-6</field>
                     </block>
                 </value>
             </block>
@@ -536,13 +531,14 @@
         let ampenvs = {};
         let noteLengths = {};
         let subdivisions = {};
-        let panvols = {};
+        let vols = {};
 
         function updateInterval(seq, sub) {
             seq.interval = sub;
         }
 
 
+        // Tone.setContext(new Tone.Context({ latencyHint: "playback" }));
 
         // Generate JavaScript code and run it
         async function runCode() {

@@ -67,19 +67,25 @@ Blockly.JavaScript['mq_8stepToneloop'] = function (block) {
     noteLengths[synth] = length;
 
     code = `
-            let ${synth}Counter = 0;
+    let ${synth}Counter = 0;
+        
           
-            let ${synth}Seq = new Tone.Loop((time) => {
-                ${synth}ChangeType();
-                ${synth}AmpEnv();
-                updateInterval(${synth}Seq, subdivisions['${synth}']);
-                if (sequences['${synth}'][${synth}Counter % 8] !== null) {
-                    ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 8])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 8]), "midi") : null), '8n');
-                }
-                ${synth}Counter++;
-                
-            }, subdivisions['${synth}']).start(0);
-
+    if (${synth} !== null) {
+  
+    let ${synth}Seq = new Tone.Loop((time) => {
+        ${synth}ChangeType();
+        //${synth}AmpEnv();
+        if (panvols['${synth}']) {
+            ${synth}ChangePanVol();
+        }
+        updateInterval(${synth}Seq, subdivisions['${synth}']);
+        if (sequences['${synth}'][${synth}Counter % 8] !== null) {
+            ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 8])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 8]), "midi") : null), '8n');
+        
+        }
+        ${synth}Counter++;
+    }, subdivisions['${synth}']).start(0);
+}
         `;
 
 

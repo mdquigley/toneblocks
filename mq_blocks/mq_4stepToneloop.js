@@ -39,6 +39,7 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
     if (topBlock) {
         synth = topBlock.getFieldValue('name');
     }
+
     subdivisions[synth] = subdivision;
 
     // '4n' = [x,x,x,x]
@@ -58,6 +59,7 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
             let ${synth}Seq = new Tone.Loop((time) => {
                 ${synth}ChangeType();
                 //${synth}AmpEnv();
+                ${synth}ChangeVol(vols['${synth}']);
                 if (panvols['${synth}']) {
                     ${synth}ChangePanVol();
                 }
