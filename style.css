@@ -13,3 +13,14 @@
 .controls #visualizer {
     padding-left: 20px;
 }
+
+#main {
+    display: flex;
+    flex-direction: row;
+}
+
+#documentation {
+    margin-left: 50px;
+    border: 1px black solid;
+    width: 40%;
+}
