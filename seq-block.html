@@ -42,22 +42,6 @@
 
     <!-- create empty div for blockly -->
     <div id="blocklyDiv" style="height: 800px; width: 1000px;"></div>
-    <!-- <xml id="toolbox" style="display: none" xmlns="https://developers.google.com/blockly/xml">
-        <block type="mq_synth"></block>
-        <block type="mq_step"></block>
-        <block type="mq_instrument"></block>
-        <block type="mq_chord"></block>
-        <block type="mq_sequence"></block>
-        <block type="mq_4step"></block>
-        <block type="mq_8step"></block>
-        <block type="controls_if"></block>
-        <block type="controls_repeat_ext"></block>
-        <block type="logic_compare"></block>
-        <block type="math_number"></block>
-        <block type="math_arithmetic"></block>
-        <block type="text"></block>
-        <block type="text_print"></block>
-    </xml> -->
 
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
         <category name="Music" categorystyle="music_category">
@@ -223,109 +207,6 @@
                 </value>
             </block>
         </category>
-        <!-- <category name="Text" categorystyle="text_category">
-            <block type="text"></block>
-            <block type="text_multiline"></block>
-            <block type="text_join"></block>
-            <block type="text_append">
-                <value name="TEXT">
-                    <shadow type="text"></shadow>
-                </value>
-            </block>
-            <block type="text_length">
-                <value name="VALUE">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_isEmpty">
-                <value name="VALUE">
-                    <shadow type="text">
-                        <field name="TEXT"></field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_indexOf">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">text</field>
-                    </block>
-                </value>
-                <value name="FIND">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_charAt">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">text</field>
-                    </block>
-                </value>
-            </block>
-            <block type="text_getSubstring">
-                <value name="STRING">
-                    <block type="variables_get">
-                        <field name="VAR">text</field>
-                    </block>
-                </value>
-            </block>
-            <block type="text_changeCase">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_trim">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_count">
-                <value name="SUB">
-                    <shadow type="text"></shadow>
-                </value>
-                <value name="TEXT">
-                    <shadow type="text"></shadow>
-                </value>
-            </block>
-            <block type="text_replace">
-                <value name="FROM">
-                    <shadow type="text"></shadow>
-                </value>
-                <value name="TO">
-                    <shadow type="text"></shadow>
-                </value>
-                <value name="TEXT">
-                    <shadow type="text"></shadow>
-                </value>
-            </block>
-            <block type="text_reverse">
-                <value name="TEXT">
-                    <shadow type="text"></shadow>
-                </value>
-            </block>
-            <label text="Input/Output:" web-class="ioLabel"></label>
-            <block type="text_print">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="text_prompt_ext">
-                <value name="TEXT">
-                    <shadow type="text">
-                        <field name="TEXT">abc</field>
-                    </shadow>
-                </value>
-            </block>
-        </category> -->
         <category name="Lists" categorystyle="list_category">
             <block type="lists_create_with">
                 <mutation items="0"></mutation>
@@ -417,15 +298,6 @@
             Tone.Destination.set({ volume: (-60 + (volume.value - 0) * (0 - -60) / (100 - 0)) });
             console.log(Tone.Destination.get());
         });
-        // start on click, set initial tempo
-        // const start = document.getElementById('start');
-        // start.addEventListener('click', runCode);
-
-        // stop on click
-        // const stop = document.getElementById('stop');
-        // stop.addEventListener('click', () => {
-        //     Tone.Transport.stop();
-        // });
 
         const run = document.getElementById('run');
         run.addEventListener('click', () => {
@@ -445,7 +317,7 @@
             // convert workspace to text code
             let textCode = Blockly.JavaScript.workspaceToCode(workspace);
             //update textarea div with text code
-            document.getElementById('textarea').innerText = textCode;
+            // document.getElementById('textarea').innerText = textCode;
         }
         // add change listener to textarea, call update function
         workspace.addChangeListener(updateTextArea);
