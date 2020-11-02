@@ -60,9 +60,6 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
                 ${synth}ChangeType();
                 //${synth}AmpEnv();
                 ${synth}ChangeVol(vols['${synth}']);
-                if (panvols['${synth}']) {
-                    ${synth}ChangePanVol();
-                }
                 updateInterval(${synth}Seq, subdivisions['${synth}']);
                 if (sequences['${synth}'][${synth}Counter % 4] !== null) {
                     ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 4])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 4]), "midi") : null), '8n');

@@ -19,13 +19,19 @@ Blockly.JavaScript['mq_synth'] = function (block) {
     const synthName = block.getFieldValue('name');
     const waveType = block.getFieldValue('wavetype');
     synths[synthName] = waveType;
+    vols[synthName] = 100;
 
     const code = `const ${synthName} = new Tone.Synth({oscillator: {type: '${synths[synthName]}'}}).toDestination();
-    ${synthName}.volume.value = -6;
+    
 
     function ${synthName}ChangeVol(vol) {
-        ${synthName}.volume.value = vol;
-    }
+        if (eval(vol) === null) {
+            vol = 0;
+        }
+        let rangedVol = Math.min(Math.max(parseInt(eval(vol)), 0), 100);
+        let dbVol = -60 + (rangedVol - 0) * (0 - -60) / (100 - 0);
+        ${synthName}.volume.value = dbVol;
+    } 
 
     function ${synthName}ChangeType() {
         if (${synthName}.oscillator.type !== synths['${synthName}']) {

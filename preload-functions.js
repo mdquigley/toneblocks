@@ -37,3 +37,23 @@ function listsGetSortCompare(type, direction) {
     var compare = compareFuncs[type];
     return function (a, b) { return compare(a, b) * direction; }
 }
+
+// is prime
+function mathIsPrime(n) {
+    // https://en.wikipedia.org/wiki/Primality_test#Naive_methods
+    if (n == 2 || n == 3) {
+        return true;
+    }
+    // False if n is NaN, negative, is 1, or not whole.
+    // And false if n is divisible by 2 or 3.
+    if (isNaN(n) || n <= 1 || n % 1 != 0 || n % 2 == 0 || n % 3 == 0) {
+        return false;
+    }
+    // Check all the numbers of form 6k +/- 1, up to sqrt(n).
+    for (var x = 6; x <= Math.sqrt(n) + 1; x += 6) {
+        if (n % (x - 1) == 0 || n % (x + 1) == 0) {
+            return false;
+        }
+    }
+    return true;
+}
