@@ -3,6 +3,10 @@ Blockly.Blocks['mq_8stepToneloop'] = {
         this.appendDummyInput()
             .appendField('loop')
         this.appendDummyInput()
+            .appendField('notelength')
+            .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "notelength");
+        this.setFieldValue("8n", 'notelength');
+        this.appendDummyInput()
             .appendField('subdivision')
             .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "subdivision");
         this.setFieldValue("8n", 'subdivision');
@@ -46,6 +50,7 @@ Blockly.JavaScript['mq_8stepToneloop'] = function (block) {
     let note7 = Blockly.JavaScript.valueToCode(block, 'PITCH7', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
     let note8 = Blockly.JavaScript.valueToCode(block, 'PITCH8', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
     let subdivision = block.getFieldValue('subdivision');
+    let notelength = block.getFieldValue('notelength');
 
     let code = "";
     let synth;
@@ -64,7 +69,7 @@ Blockly.JavaScript['mq_8stepToneloop'] = function (block) {
 
     sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null), (note5 ? note5 : null), (note6 ? note6 : null), (note7 ? note7 : null), (note8 ? note8 : null)];
 
-    noteLengths[synth] = length;
+    noteLengths[synth] = notelength;
 
     code = `
     let ${synth}Counter = 0;
@@ -78,7 +83,7 @@ Blockly.JavaScript['mq_8stepToneloop'] = function (block) {
                 ${synth}ChangeVol(vols['${synth}']);
                 updateInterval(${synth}Seq, subdivisions['${synth}']);
         if (sequences['${synth}'][${synth}Counter % 8] !== null) {
-            ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 8])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 8]), "midi") : null), '8n');
+            ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 8])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 8]), "midi") : null), noteLengths['${synth}']);
         
         }
         ${synth}Counter++;

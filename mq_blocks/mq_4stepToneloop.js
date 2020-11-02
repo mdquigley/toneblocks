@@ -3,6 +3,10 @@ Blockly.Blocks['mq_4stepToneloop'] = {
         this.appendDummyInput()
             .appendField('loop')
         this.appendDummyInput()
+            .appendField('notelength')
+            .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "notelength");
+        this.setFieldValue("8n", 'notelength');
+        this.appendDummyInput()
             .appendField('subdivision')
             .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "subdivision");
         this.setFieldValue("4n", 'subdivision');
@@ -30,10 +34,10 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
     let note3 = Blockly.JavaScript.valueToCode(block, 'PITCH3', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
     let note4 = Blockly.JavaScript.valueToCode(block, 'PITCH4', Blockly.JavaScript.ORDER_FUNCTION_CALL) || null;
     let subdivision = block.getFieldValue('subdivision');
+    let notelength = block.getFieldValue('notelength');
 
     let code = "";
     let synth;
-    let oldSynth;
 
     const topBlock = block.getTopStackBlock();
     if (topBlock) {
@@ -48,7 +52,7 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
 
     sequences[synth] = [(note1 ? note1 : null), (note2 ? note2 : null), (note3 ? note3 : null), (note4 ? note4 : null)];
 
-    noteLengths[synth] = length;
+    noteLengths[synth] = notelength;
 
     code = `
             let ${synth}Counter = 0;
@@ -62,7 +66,7 @@ Blockly.JavaScript['mq_4stepToneloop'] = function (block) {
                 ${synth}ChangeVol(vols['${synth}']);
                 updateInterval(${synth}Seq, subdivisions['${synth}']);
                 if (sequences['${synth}'][${synth}Counter % 4] !== null) {
-                    ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 4])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 4]), "midi") : null), '8n');
+                    ${synth}.triggerAttackRelease(((eval(sequences['${synth}'][${synth}Counter % 4])) ? Tone.Frequency(eval(sequences['${synth}'][${synth}Counter % 4]), "midi") : null), noteLengths['${synth}']);
                 
                 }
                 ${synth}Counter++;
