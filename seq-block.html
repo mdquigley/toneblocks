@@ -33,8 +33,10 @@
 
     <div class="controls">
         <button type="button" id="run" data-on="false">Start</button><br />
-        <label for="tempo">Tempo</label>
+        <label for="tempo">Tempo:</label>
         <input type="range" name="tempo" id="tempo" min="20" max="260" value="120"><br />
+        <label for="volume">Volume:</label>
+        <input type="range" name="volume" id="volume" min="0" max="100" value="100"><br />
         <div id="visualizer"></div>
     </div>
 
@@ -409,6 +411,12 @@
             Tone.Transport.bpm.value = tempo.value;
         });
 
+        // set master volume and monitor for change
+        const volume = document.getElementById('volume');
+        volume.addEventListener('change', () => {
+            Tone.Destination.set({ volume: (-60 + (volume.value - 0) * (0 - -60) / (100 - 0)) });
+            console.log(Tone.Destination.get());
+        });
         // start on click, set initial tempo
         // const start = document.getElementById('start');
         // start.addEventListener('click', runCode);
