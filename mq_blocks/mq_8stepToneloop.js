@@ -1,7 +1,7 @@
 Blockly.Blocks['mq_8stepToneloop'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField('loop')
+            .appendField('Loop')
         this.appendDummyInput()
             .appendField('subdivision')
             .appendField(new Blockly.FieldDropdown([["1n", "1n"], ["2n", "2n"], ["4n", "4n"], ["8n", "8n"], ["16n", "16n"]]), "subdivision");

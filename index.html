@@ -64,6 +64,11 @@
         <label for="volume">Volume:</label>
         <input type="range" name="volume" id="volume" min="0" max="100" value="100"><br />
         <div id="visualizer"></div>
+        <div id="title">
+            <h3>Welcome to Toneblocks!</h3>
+            <p>A web based, musical creative coding environment.</p>
+        </div>
+
     </div>
 
     <!-- create empty div for blockly -->
@@ -74,14 +79,9 @@
             <category name="Music" categorystyle="music_category">
                 <block type="mq_synth"></block>
                 <block type="mq_4stepToneloop">
-                    <value name="PITCH1">
-                        <block type="math_number">
-                            <field name="NUM">60</field>
-                        </block>
-                    </value>
                 </block>
                 <block type="mq_8stepToneloop"></block>
-                <block type="mq_ampenv"></block>
+                <!-- <block type="mq_ampenv"></block> -->
                 <block type="mq_volume">
                     <value name="volume">
                         <block type="math_number">
@@ -89,9 +89,9 @@
                         </block>
                     </value>
                 </block>
-                <block type="mq_instrument"></block>
-                <block type="mq_chord"></block>
-                <block type="mq_sequence"></block>
+                <!-- <block type="mq_instrument"></block> -->
+                <!-- <block type="mq_chord"></block> -->
+                <!-- <block type="mq_sequence"></block> -->
             </category>
             <category name="Logic" categorystyle="logic_category">
                 <block type="controls_if"></block>
@@ -102,7 +102,7 @@
                 <block type="logic_null"></block>
                 <block type="logic_ternary"></block>
             </category>
-            <category name="Loops" categorystyle="loop_category">
+            <!-- <category name="Loops" categorystyle="loop_category">
                 <block type="controls_repeat_ext">
                     <value name="TIMES">
                         <shadow type="math_number">
@@ -130,7 +130,7 @@
                 </block>
                 <block type="controls_forEach"></block>
                 <block type="controls_flow_statements"></block>
-            </category>
+            </category> -->
             <category name="Math" categorystyle="math_category">
                 <block type="math_number" gap="32">
                     <field name="NUM">60</field>
@@ -290,10 +290,19 @@
         </xml>
 
         <div id="documentation">
-            <h3>Welcome to Toneblocks!</h3>
-            <p>A web based, musical creative coding environment.</p>
-            <p>Toneblocks uses MIDI pitch values, where C4 is 60.</p>
-            <p>Documentation</p>
+            <h3>Tutorial (<i>Hello World</i>)</h3>
+            <img src="hello-tone.png">
+            <p>In this example, a synthesizer with a sinewave oscillator will cycle through a 4 note loop of quarter
+                notes,
+                playing note 60 on the downbeat. Lets take a closer look:</p>
+            <ul>
+                <li>A <i>Synth</i> block is connected to a <i>Loop</i> block.
+                <li>The <i>Loop</i> block's subdivision is set to "4n", for quarter note.</li>
+                <li>The <i>Loop</i> block has a <i>Number</i> block connected to the "Note 1" input.</li>
+                <li>The <i>Number</i> block is set to 60, which is the MIDI pitch value of the musical note known as
+                    middle C, or C4.</li>
+            </ul>
+            <p>Go ahead and recreate the example on your own!</p>
         </div>
         <div id="textarea"></div>
     </div>
@@ -303,7 +312,7 @@
 
         // create new theme based on Dark with music category style
         const theme = Blockly.Theme.defineTheme('MQ', {
-            'base': Blockly.Themes.Dark,
+            'base': Blockly.Themes.Classic,
             'categoryStyles': {
                 'music_category': {
                     'colour': '20'

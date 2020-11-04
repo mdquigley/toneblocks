@@ -1,3 +1,6 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
 .controls {
     display: flex;
     flex-direction: row;
@@ -23,4 +26,16 @@
     margin-left: 50px;
     border: 1px black solid;
     width: 40%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+li {
+    margin-top: 5px;
+}
+
+#title {
+    text-align: left;
+    margin-left: 225px;
+    
 }

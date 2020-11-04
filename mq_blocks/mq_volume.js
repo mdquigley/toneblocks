@@ -2,7 +2,7 @@ Blockly.Blocks['mq_volume'] = {
     init: function () {
         this.appendValueInput('volume')
             .setCheck('Number')
-            .appendField('volume');
+            .appendField('Volume');
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
