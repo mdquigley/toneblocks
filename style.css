@@ -28,6 +28,7 @@ html {
     width: 40%;
     padding-left: 10px;
     padding-right: 10px;
+    height: 800px;
 }
 
 li {
@@ -38,4 +39,19 @@ li {
     text-align: left;
     margin-left: 225px;
     
+}
+
+#doc-nav{
+    display: flex;
+    flex-direction: row;
+}
+
+#doc-nav>li {
+    list-style-type: none;
+    padding-left: 20px;
+    
+}
+
+#hide {
+    display: none;
 }

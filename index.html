@@ -290,29 +290,63 @@
         </xml>
 
         <div id="documentation">
-            <h3>Tutorial (<i>Hello World</i>)</h3>
-            <img src="hello-tone.png">
-            <p>In this example, a synthesizer with a sinewave oscillator will cycle through a 4 note loop of quarter
-                notes,
-                playing note 60 on the downbeat. Lets take a closer look:</p>
-            <ul>
-                <li>A <i>Synth</i> block is connected to a <i>Loop</i> block.
-                <li>The <i>Loop</i> block's subdivision is set to "4n", for quarter note.</li>
-                <li>The <i>Loop</i> block has a <i>Number</i> block connected to the "Note 1" input.</li>
-                <li>The <i>Number</i> block is set to 60, which is the MIDI pitch value of the musical note known as
-                    middle C, or C4.</li>
-            </ul>
-            <p>Go ahead and recreate the example on your own!</p>
+            <div id="scroll" style="max-height:100%;overflow:auto;">
+                <div id="tutorial">
+                    <h3>Tutorial (<i>Hello World</i>)</h3>
+                    <img src="hello-tone.png">
+                    <p>In this example, a synthesizer with a sinewave oscillator will cycle through a 4 note loop of
+                        quarter
+                        notes,
+                        playing note 60 on the downbeat. Lets take a closer look:</p>
+                    <ul>
+                        <li>A <i>Synth</i> block is connected to a <i>Loop</i> block.
+                        <li>The <i>Loop</i> block's subdivision is set to "4n", for quarter note.</li>
+                        <li>The <i>Loop</i> block has a <i>Number</i> block connected to the "Note 1" input.</li>
+                        <li>The <i>Number</i> block is set to 60, which is the MIDI pitch value of the musical note
+                            known as
+                            middle C, or C4.</li>
+                    </ul>
+                    <p>Go ahead and recreate the example on your own!</p>
+                </div>
+                <div id="task1">
+                    <hr>
+                    <h3>Task 1</h3>
+                    <p>Create a four note loop that arpeggiates over a C Maj7 chord in eighth notes, played by a synth
+                        with
+                        a triangle wave oscillator. MIDI pitch values are included below:</p>
+                    <ul>
+                        <li>C4: 60</li>
+                        <li>E4: 64</li>
+                        <li>G4: 67</li>
+                        <li>B4: 71</li>
+                    </ul>
+                </div>
+                <div id="task2">
+                    <hr>
+                    <h3>Task 2</h3>
+                    <p>Create a loop that generates random pitch values between 45 and 70, played by a synth with volume
+                        set to 80.</p>
+                </div>
+                <div id="task3">
+                    <hr>
+                    <h3>Task 3</h3>
+                    <p>Make music that incorporates generative randomness and/or logic.</p>
+                </div>
+                <div id="task4">
+                    <hr>
+                    <h3>Task 4</h3>
+                    <p>Make music however you see fit.</p>
+                </div>
+            </div>
         </div>
         <div id="textarea"></div>
     </div>
 
     <script>
 
-
         // create new theme based on Dark with music category style
         const theme = Blockly.Theme.defineTheme('MQ', {
-            'base': Blockly.Themes.Classic,
+            'base': Blockly.Themes.Dark,
             'categoryStyles': {
                 'music_category': {
                     'colour': '20'
