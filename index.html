@@ -1,107 +1,467 @@
+<!DOCTYPE html>
 <html lang="en">
+<!-- test git change -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing Tone.js</title>
-    <!-- code-along to Tone.js intro page: https://tonejs.github.io/ -->
+    <title>Seq-Block</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="node_modules/tone/build/Tone.js"></script>
+    <script src="node_modules/@tonejs/ui/build/tone-ui.js"></script>
+    <script src="node_modules/blockly/blockly_compressed.js"></script>
+    <script src="node_modules/blockly/blocks_compressed.js"></script>
+    <script src="node_modules/blockly/javascript_compressed.js"></script>
+    <script src="node_modules/blockly/msg/en.js"></script>
+    <script src="mq_blocks/mq_synth.js"></script>
+    <script src="mq_blocks/mq_ampenv.js"></script>
+    <script src="mq_blocks/mq_4step.js"></script>
+    <script src="mq_blocks/mq_8step.js"></script>
+    <script src="mq_blocks/mq_instrument.js"></script>
+    <script src="mq_blocks/mq_chord.js"></script>
+    <script src="mq_blocks/mq_sequence.js"></script>
+    <script src="mq_blocks/mq_4stepToneloop.js"></script>
+    <script src="mq_blocks/mq_8stepToneloop.js"></script>
+    <script src="mq_blocks/mq_volume.js"></script>
+    <script src="preload-functions.js"></script>
+
 </head>
 
 <body>
-    <script src="./node_modules/tone/build/Tone.js"></script>
-    <p>figuring this out, woo</p>
+    <!-- <button type="button" id="start">Start</button> -->
+    <!-- <button type="button" id="stop">Stop</button><br /> -->
 
-    <!-- Hello Tone -->
-    <!-- <button id="play-button">Hello Tone</button>
-        <script>
-            const playhello = document.getElementById('play-button');
-            const synthhello = new Tone.Synth().toDestination();
-            
-            playhello.addEventListener('click', () => {
-                synthhello.triggerAttackRelease('C4', '8n');     
-            });
-        </script> -->
+    <div class="controls">
+        <button type="button" id="run" data-on="false">Start</button><br />
+        <label for="tempo">Tempo:</label>
+        <input type="range" name="tempo" id="tempo" min="20" max="260" value="120"><br />
+        <label for="volume">Volume:</label>
+        <input type="range" name="volume" id="volume" min="0" max="100" value="100"><br />
+        <div id="visualizer"></div>
+    </div>
 
-    <!-- Tone Synth -->
-    <button id='synth-button'>Tone Synth</button>
+    <!-- create empty div for blockly -->
+    <div id="main">
+        <div id="blocklyDiv" style="height: 800px; width: 1000px;"></div>
+
+        <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+            <category name="Music" categorystyle="music_category">
+                <block type="mq_synth"></block>
+                <block type="mq_4stepToneloop">
+                    <value name="PITCH1">
+                        <block type="math_number">
+                            <field name="NUM">60</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="mq_8stepToneloop"></block>
+                <block type="mq_ampenv"></block>
+                <block type="mq_volume">
+                    <value name="volume">
+                        <block type="math_number">
+                            <field name="NUM">100</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="mq_instrument"></block>
+                <block type="mq_chord"></block>
+                <block type="mq_sequence"></block>
+            </category>
+            <category name="Logic" categorystyle="logic_category">
+                <block type="controls_if"></block>
+                <block type="logic_compare"></block>
+                <block type="logic_operation"></block>
+                <block type="logic_negate"></block>
+                <block type="logic_boolean"></block>
+                <block type="logic_null"></block>
+                <block type="logic_ternary"></block>
+            </category>
+            <category name="Loops" categorystyle="loop_category">
+                <block type="controls_repeat_ext">
+                    <value name="TIMES">
+                        <shadow type="math_number">
+                            <field name="NUM">10</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="controls_whileUntil"></block>
+                <block type="controls_for">
+                    <value name="FROM">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                    <value name="TO">
+                        <shadow type="math_number">
+                            <field name="NUM">10</field>
+                        </shadow>
+                    </value>
+                    <value name="BY">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="controls_forEach"></block>
+                <block type="controls_flow_statements"></block>
+            </category>
+            <category name="Math" categorystyle="math_category">
+                <block type="math_number" gap="32">
+                    <field name="NUM">60</field>
+                </block>
+                <block type="math_arithmetic">
+                    <value name="A">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                    <value name="B">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_single">
+                    <value name="NUM">
+                        <shadow type="math_number">
+                            <field name="NUM">9</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_trig">
+                    <value name="NUM">
+                        <shadow type="math_number">
+                            <field name="NUM">45</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_constant"></block>
+                <block type="math_number_property">
+                    <value name="NUMBER_TO_CHECK">
+                        <shadow type="math_number">
+                            <field name="NUM">0</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_round">
+                    <value name="NUM">
+                        <shadow type="math_number">
+                            <field name="NUM">3.1</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_on_list"></block>
+                <block type="math_modulo">
+                    <value name="DIVIDEND">
+                        <shadow type="math_number">
+                            <field name="NUM">64</field>
+                        </shadow>
+                    </value>
+                    <value name="DIVISOR">
+                        <shadow type="math_number">
+                            <field name="NUM">10</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_constrain">
+                    <value name="VALUE">
+                        <shadow type="math_number">
+                            <field name="NUM">50</field>
+                        </shadow>
+                    </value>
+                    <value name="LOW">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                    <value name="HIGH">
+                        <shadow type="math_number">
+                            <field name="NUM">100</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_random_int">
+                    <value name="FROM">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                    <value name="TO">
+                        <shadow type="math_number">
+                            <field name="NUM">100</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="math_random_float"></block>
+                <block type="math_atan2">
+                    <value name="X">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                    <value name="Y">
+                        <shadow type="math_number">
+                            <field name="NUM">1</field>
+                        </shadow>
+                    </value>
+                </block>
+            </category>
+            <category name="Lists" categorystyle="list_category">
+                <block type="lists_create_with">
+                    <mutation items="0"></mutation>
+                </block>
+                <block type="lists_create_with"></block>
+                <block type="lists_repeat">
+                    <value name="NUM">
+                        <shadow type="math_number">
+                            <field name="NUM">5</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="lists_length"></block>
+                <block type="lists_isEmpty"></block>
+                <block type="lists_indexOf">
+                    <value name="VALUE">
+                        <block type="variables_get">
+                            <field name="VAR">list</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="lists_getIndex">
+                    <value name="VALUE">
+                        <block type="variables_get">
+                            <field name="VAR">list</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="lists_setIndex">
+                    <value name="LIST">
+                        <block type="variables_get">
+                            <field name="VAR">list</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="lists_getSublist">
+                    <value name="LIST">
+                        <block type="variables_get">
+                            <field name="VAR">list</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="lists_split">
+                    <value name="DELIM">
+                        <shadow type="text">
+                            <field name="TEXT">,</field>
+                        </shadow>
+                    </value>
+                </block>
+                <block type="lists_sort"></block>
+                <block type="lists_reverse"></block>
+            </category>
+            <sep></sep>
+            <category name="Variables" categorystyle="variable_category" custom="VARIABLE"></category>
+            <category name="Functions" categorystyle="procedure_category" custom="PROCEDURE"></category>
+        </xml>
+
+        <div id="documentation">
+            <h3>Welcome to Toneblocks!</h3>
+            <p>A web based, musical creative coding environment.</p>
+            <p>Toneblocks uses MIDI pitch values, where C4 is 60.</p>
+            <p>Documentation</p>
+        </div>
+        <div id="textarea"></div>
+    </div>
+
     <script>
-        // LOOPING
-        // const synthA = new Tone.FMSynth().toDestination();
-        // const synthB = new Tone.AMSynth().toDestination();
-
-        // const loopA = new Tone.Loop(time => {
-        //     synthA.triggerAttackRelease('C3', '8n', time);
-        // }, '4n').start(0);
-
-        // const loopB = new Tone.Loop(time => {
-        //     synthB.triggerAttackRelease('A4', '8n', time);
-        // }, '4n').start('8n');
-
-        // Tone.Transport.start();
-        // Tone.Transport.bpm.rampTo(800, 10);
-
-        // Tone.Transport.stop();
 
 
-        // POLY SYNTH
-        // const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-        // const now = Tone.now();
-        // synth.triggerAttack('D4', now);
-        // synth.triggerAttack('F4', now + 0.5);
-        // synth.triggerAttack('A4', now + 1);
-        // synth.triggerAttack('C5', now + 1.5);
-        // synth.triggerAttack('E5', now + 2);
-        // synth.triggerRelease(['D4', 'F4', 'A4', 'C5', 'E5'], now + 4);
+        // create new theme based on Dark with music category style
+        const theme = Blockly.Theme.defineTheme('MQ', {
+            'base': Blockly.Themes.Dark,
+            'categoryStyles': {
+                'music_category': {
+                    'colour': '20'
+                }
+            }
+        });
 
-        // SAMPLES
-        // const player = new Tone.Player('https://tonejs.github.io/audio/berklee/gong_1.mp3').toDestination();
-        // Tone.loaded().then(() => {
-        //     player.start();
-        // });
+        // inject Blockly into workspace
+        const workspace = Blockly.inject('blocklyDiv', {
+            toolbox: document.getElementById('toolbox'),
+            theme: 'MQ'
+        });
 
-        // SAMPLER
-        // const sampler = new Tone.Sampler({
-        //     urls: {
-        //         'C4': 'C4.mp3',
-        //         'D#4': 'Ds4.mp3',
-        //         'F#4': 'Fs4.mp3',
-        //         'A4': 'A4.mp3'
+        // set tempo for transport and monitor for change
+        const tempo = document.getElementById('tempo');
+        tempo.addEventListener('change', () => {
+            Tone.Transport.bpm.value = tempo.value;
+        });
+
+        // set master volume and monitor for change
+        const volume = document.getElementById('volume');
+        volume.addEventListener('change', () => {
+            Tone.Destination.set({ volume: (-60 + (volume.value - 0) * (0 - -60) / (100 - 0)) });
+            console.log(Tone.Destination.get());
+        });
+
+        const run = document.getElementById('run');
+        run.addEventListener('click', () => {
+            if (run.dataset.on == 'false') {
+                runCode();
+                run.dataset.on = true;
+                run.innerText = 'Stop';
+            } else {
+                Tone.Transport.stop();
+                run.dataset.on = false;
+                run.innerText = 'Start';
+            }
+        })
+
+        // update textarea function
+        function updateTextArea(event) {
+            // convert workspace to text code
+            let textCode = Blockly.JavaScript.workspaceToCode(workspace);
+            //update textarea div with text code
+            // document.getElementById('textarea').innerText = textCode;
+        }
+        // add change listener to textarea, call update function
+        workspace.addChangeListener(updateTextArea);
+
+        const toneWaveform = new Tone.Waveform();
+        const merge = new Tone.Merge().connect(toneWaveform);
+        Tone.Destination.fan(merge);
+        waveform({
+            tone: toneWaveform,
+            parent: document.querySelector("#visualizer")
+        })
+
+        // load piano samples 
+        const piano = new Tone.Sampler({
+            urls: {
+                A0: "A0.mp3",
+                C1: "C1.mp3",
+                "D#1": "Ds1.mp3",
+                "F#1": "Fs1.mp3",
+                A1: "A1.mp3",
+                C2: "C2.mp3",
+                "D#2": "Ds2.mp3",
+                "F#2": "Fs2.mp3",
+                A2: "A2.mp3",
+                C3: "C3.mp3",
+                "D#3": "Ds3.mp3",
+                "F#3": "Fs3.mp3",
+                A3: "A3.mp3",
+                C4: "C4.mp3",
+                "D#4": "Ds4.mp3",
+                "F#4": "Fs4.mp3",
+                A4: "A4.mp3",
+                C5: "C5.mp3",
+                "D#5": "Ds5.mp3",
+                "F#5": "Fs5.mp3",
+                A5: "A5.mp3",
+                C6: "C6.mp3",
+                "D#6": "Ds6.mp3",
+                "F#6": "Fs6.mp3",
+                A6: "A6.mp3",
+                C7: "C7.mp3",
+                "D#7": "Ds7.mp3",
+                "F#7": "Fs7.mp3",
+                A7: "A7.mp3",
+                C8: "C8.mp3"
+            },
+            release: 1,
+            baseUrl: "salamander/",
+            onload: () => {
+                console.log('piano loaded');
+            }
+        }).toDestination();
+
+        const casio = new Tone.Sampler({
+            urls: {
+                A1: "A1.mp3",
+                A2: "A2.mp3",
+                "A#1": "As1.mp3",
+                B1: "B1.mp3",
+                C2: "C2.mp3",
+                "C#2": "Cs2.mp3",
+                D2: "D2.mp3",
+                "D#2": "Ds2.mp3",
+                E2: "E2.mp3",
+                F2: "F2.mp3",
+                "F#2": "Fs2.mp3",
+                G2: "G2.mp3",
+                "G#1": "Gs1.mp3"
+
+            },
+            release: 1,
+            baseUrl: "casio/",
+            onload: () => {
+                console.log('casio loaded');
+            }
+        }).toDestination();
+
+        let sequences = {};
+        // let sequencesProxy = new Proxy(sequences, {
+        //     get: (o, property) => {
+        //         return property in o ? JSON.stringify(o) : null;
         //     },
-        //     release: 1,
-        //     baseUrl: 'https://tonejs.github.io/audio/salamander/'
-        // }).toDestination();
-
-        // Tone.loaded().then(() => {
-        //     sampler.triggerAttackRelease(['Eb4', 'G4', 'Bb4'], 4);
-        // })
-
-        // EFFECTS
-        // const player = new Tone.Player({
-        //     url: 'https://tonejs.github.io/audio/berklee/gurgling_theremin_1.mp3',
-        //     loop: true,
-        //     autostart: true
+        //     set: (o, property, value) => {
+        //         o[property] = value;
+        //     }
         // });
 
-        // const distortion = new Tone.Distortion(0.4).toDestination();
-        // player.connect(distortion);
 
-        // const player = new Tone.Player({
-        //     url: 'https://tonejs.github.io/audio/drum-samples/loops/ominous.mp3',
-        //     autostart: true
-        // });
-        // const filter = new Tone.Filter(400, 'lowpass').toDestination();
-        // const feedbackDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
 
-        // // serial connnection of effects
-        // player.connect(feedbackDelay);
-        // feedbackDelay.connect(filter);
+        let synths = {};
+        let ampenvs = {};
+        let noteLengths = {};
+        let subdivisions = {};
+        let vols = {};
 
-        // SIGNALS
-        // const osc = new Tone.Oscillator().toDestination();
-        // osc.frequency.value = 'C4';
-        // osc.frequency.rampTo('C2', 2);
-        // osc.start().stop('+3');
+        function updateInterval(seq, sub) {
+            seq.interval = sub;
+        }
+
+
+        // Tone.setContext(new Tone.Context({ latencyHint: "playback" }));
+
+        // Generate JavaScript code and run it
+        async function runCode() {
+
+            await Tone.start();
+
+            // prevent infinite loop
+            window.LoopTrap = 1000;
+            Blockly.JavaScript.INFINITE_LOOP_TRAP =
+                'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+
+            // convert workspace to text code
+            Blockly.JavaScript.addReservedWords('code');
+            const code = Blockly.JavaScript.workspaceToCode(workspace);
+
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+            // test adding Tone synth trigger
+            wrapCode = code + `Tone.Transport.bpm.value = tempo.value;
+            Tone.Transport.start();
+            `
+
+
+            // evaluate code
+            try {
+                eval(wrapCode);
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+        // function readNote(note) {
+        //     return (note ? Tone.Frequency(eval(note), "midi") : null);
+        // }
+
     </script>
+
+
 </body>
 
 </html>
