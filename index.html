@@ -76,7 +76,7 @@
         <div id="blocklyDiv" style="height: 800px; width: 1000px;"></div>
 
         <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-            <category name="Music" categorystyle="music_category">
+            <category name="Music" <!-- categorystyle="music_category" --> colour="%{BKY_MUSIC_HUE}">
                 <block type="mq_synth"></block>
                 <block type="mq_4stepToneloop">
                 </block>
@@ -93,7 +93,7 @@
                 <!-- <block type="mq_chord"></block> -->
                 <!-- <block type="mq_sequence"></block> -->
             </category>
-            <category name="Logic" categorystyle="logic_category">
+            <category name="Logic" <!-- categorystyle="logic_category"> --> colour="%{BKY_LOGIC_HUE}">
                 <block type="controls_if"></block>
                 <block type="logic_compare"></block>
                 <block type="logic_operation"></block>
@@ -343,22 +343,27 @@
     </div>
 
     <script>
-
+	
+	Blockly.Msg.MUSIC_HUE = 0;	
+	Blockly.Msg.LOGIC_HUE = 90;
+	Blockly.Msg.MATH_HUE = 180;
+	Blockly.Msg.LIST_HUE = 270;
+	
         // create new theme based on Dark with music category style
         const theme = Blockly.Theme.defineTheme('MQ', {
             'base': Blockly.Themes.Dark,
             'categoryStyles': {
                 'music_category': {
-                    'colour': '0'
+                    'colour': '%{BKY_MUSIC_HUE}'
                 },
 		'logic_category': {
-		    'colour': '90'
+		    'colour': '%{BKY_LOGIC_HUE}'
             	},
 		'math_category': {
-		    'colour': '180'
+		    'colour': '%{BKY_MATH_HUE}'
 		},
 		'list_category': {
-		    'colour': '270'
+		    'colour': '%{BKY_LIST_HUE}'
 		}
 	    }
         });
@@ -366,7 +371,15 @@
         // inject Blockly into workspace
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox'),
-            theme: 'MQ'
+            theme: 'MQ',
+	    zoom:
+               {controls: true,
+          	wheel: true,
+          	startScale: 1.0,
+          	maxScale: 3,
+          	minScale: 0.3,
+          	scaleSpeed: 1.2,
+          	pinch: true}
         });
 
         // set tempo for transport and monitor for change
