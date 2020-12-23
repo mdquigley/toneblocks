@@ -7,8 +7,8 @@ Blockly.Blocks['mq_volume'] = {
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setOutput(false);
-        this.setColour(160);
-    }
+	this.setStyle("music_blocks");    
+}
 };
 
 Blockly.JavaScript['mq_volume'] = function (block) {

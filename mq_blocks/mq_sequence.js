@@ -12,8 +12,8 @@ Blockly.Blocks['mq_sequence'] = {
             .appendField("note duration");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(160);
-    }
+	this.setStyle("music_blocks");    
+}
 };
 
 Blockly.JavaScript['mq_sequence'] = function (block) {

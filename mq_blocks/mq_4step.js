@@ -17,7 +17,7 @@ Blockly.Blocks['mq_4step'] = {
             .appendField('Note 4');
         this.setPreviousStatement(true, null);
         this.setOutput(false);
-        this.setColour(210);
+        this.setStyle("music_blocks");
     }
 };
 

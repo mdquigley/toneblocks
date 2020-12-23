@@ -16,7 +16,7 @@ Blockly.Blocks['mq_step_proxy'] = {
             .appendField('Note 4');
         this.setPreviousStatement(true, null);
         this.setOutput(false);
-        this.setColour(160);
+	this.setStyle("music_blocks");
     }
 };
 

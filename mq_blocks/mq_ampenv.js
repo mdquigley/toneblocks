@@ -16,8 +16,8 @@ Blockly.Blocks['mq_ampenv'] = {
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setOutput(false);
-        this.setColour(160);
-    }
+	this.setStyle("music_blocks");    
+}
 };
 
 Blockly.JavaScript['mq_ampenv'] = function (block) {

@@ -30,8 +30,8 @@ Blockly.Blocks['mq_8step'] = {
             .setCheck('Number')
             .appendField('Note 8');
         this.setOutput(false);
-        this.setColour(160);
-    }
+	this.setStyle("music_blocks");    
+}
 };
 
 Blockly.JavaScript['mq_8step'] = function (block) {

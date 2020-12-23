@@ -32,7 +32,7 @@ Blockly.Blocks['mq_8stepToneloop'] = {
             .appendField('Note 8');
         this.setPreviousStatement(true, null);
         this.setOutput(false);
-        this.setColour(210);
+        this.setStyle("music_blocks");
     }
 };
 
