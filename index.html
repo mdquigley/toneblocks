@@ -64,20 +64,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">Docs</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Tutorial</a>
                     </li>
+
                 </ul>
                 <ul class="navbar-nav me-auto" width="100">
-                    <li class="nav-item nav-link float-right">A web based, musical creative coding environment.</li>
+                    <li class="nav-item subtitle">A web based, musical creative coding environment.</li>
                 </ul>
             </div>
         </div>
@@ -90,7 +83,7 @@
     <!-- <button type="button" id="stop">Stop</button><br /> -->
 
     <div class="controls">
-        <button type="button" class="btn btn-primary">Start</button><br />
+        <button type="button" id="run" class="btn btn-primary">Start</button><br />
         <label for="tempo">Tempo:</label>
         <input type="range" name="tempo" id="tempo" min="20" max="260" value="120"><br />
         <label for="volume">Volume:</label>
@@ -101,7 +94,7 @@
 
     <!-- create empty div for blockly -->
     <div id="main">
-        <div id="blocklyDiv" style="height: 800px; width: 1000px"></div>
+        <div id="blocklyDiv" style="height: 80vh; width: 100vw"></div>
 
         <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
             <category name="Music" categorystyle="music_category">
@@ -317,6 +310,9 @@
             <category name="Functions" categorystyle="procedure_category" custom="PROCEDURE"></category> -->
         </xml>
 
+
+
+
         <div id="documentation">
             <div id="scroll" style="max-height:100%;overflow:auto;">
                 <div id="tutorial">
@@ -333,17 +329,26 @@
                             middle C, or C4.</li>
                     </ul>
                     <p>Go ahead and recreate the example on your own!</p>
+
+
+                    <h2>About</h2>
+                    <p>Toneblocks is a block-based visual programming environment for creating music with code. It
+                        was
+                        originally
+                        developed as my masters thesis at NYU Steinhardt's Music Technology graduate program. I
+                        sought to
+                        generate a
+                        tool
+                        that is both intuitive and interesting for novice users with interests in computer
+                        programming and
+                        music.
+                    </p>
                 </div>
             </div>
         </div>
-        <div id="textarea"></div>
     </div>
+    <div id="docs" class="container">
 
-    <div id="about">
-        <h2>About</h2>
-        <p>Toneblocks is a block-based visual programming environment for creating music with code. It was originally
-        developed as my masters thesis at NYU Steinhardt's Music Technology graduate program. I sought to generate a tool
-        that is both intuitive and interesting for novice users with interests in computer programming and music.</p>
     </div>
 
     <script>

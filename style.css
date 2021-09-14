@@ -23,12 +23,10 @@ html {
 }
 
 #documentation {
-    margin-left: 50px;
     border: 1px black solid;
-    width: 40%;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 800px;
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 35vw;
 }
 
 li {
@@ -50,14 +48,29 @@ li {
     display: none;
 }
 
-.nav-item .nav-link {
-    text-align: right;
-}
-
 #about {
     padding: 20px;
+    width: 50%;
 }
 
 #blocklyDiv {
     margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+}
+
+#run {
+    width: 100px;
+}
+
+.subtitle {
+    color: white;
+    width: 50vw;
+    text-align: right;
+}
+
+#docs {
+    display: flex;
+    flex-direction: row;
 }
