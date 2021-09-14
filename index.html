@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toneblocks</title>
+
+    <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="img/tb.png">
 
@@ -47,26 +49,59 @@
 </head>
 
 <body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Toneblocks</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">Docs</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto" width="100">
+                    <li class="nav-item nav-link float-right">A web based, musical creative coding environment.</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
     <!-- <button type="button" id="start">Start</button> -->
     <!-- <button type="button" id="stop">Stop</button><br /> -->
 
     <div class="controls">
-        <button type="button" id="run" data-on="false">Start</button><br />
+        <button type="button" class="btn btn-primary">Start</button><br />
         <label for="tempo">Tempo:</label>
         <input type="range" name="tempo" id="tempo" min="20" max="260" value="120"><br />
         <label for="volume">Volume:</label>
         <input type="range" name="volume" id="volume" min="0" max="100" value="100"><br />
         <div id="visualizer"></div>
-        <div id="title">
-            <h1>Welcome to Toneblocks!</h1>
-            <p>A web based, musical creative coding environment.</p>
-        </div>
 
     </div>
 
     <!-- create empty div for blockly -->
     <div id="main">
-        <div id="blocklyDiv" style="height: 800px; width: 1000px;"></div>
+        <div id="blocklyDiv" style="height: 800px; width: 1000px"></div>
 
         <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
             <category name="Music" categorystyle="music_category">
@@ -288,9 +323,7 @@
                     <h3>Tutorial (<i>Hello World</i>)</h3>
                     <img src="img/hello-tone.png" width="200px">
                     <p>In this example, a synthesizer with a sinewave oscillator will cycle through a 4 note loop of
-                        quarter
-                        notes,
-                        playing note 60 on the downbeat. Lets take a closer look:</p>
+                        quarter notes, playing note 60 on the downbeat. Lets take a closer look:</p>
                     <ul>
                         <li>A <i>Synth</i> block is connected to a <i>Loop</i> block.
                         <li>The <i>Loop</i> block's subdivision is set to "4n", for quarter note.</li>
@@ -301,47 +334,25 @@
                     </ul>
                     <p>Go ahead and recreate the example on your own!</p>
                 </div>
-                <div id="task1">
-                    <hr>
-                    <h3>Task 1</h3>
-                    <p>Create a four note loop that arpeggiates over a C Maj7 chord in eighth notes, played by a synth
-                        with
-                        a triangle wave oscillator. MIDI pitch values are included below:</p>
-                    <ul>
-                        <li>C4: 60</li>
-                        <li>E4: 64</li>
-                        <li>G4: 67</li>
-                        <li>B4: 71</li>
-                    </ul>
-                </div>
-                <div id="task2">
-                    <hr>
-                    <h3>Task 2</h3>
-                    <p>Create a loop that generates random pitch values between 45 and 70, played by a synth with volume
-                        set to 80.</p>
-                </div>
-                <div id="task3">
-                    <hr>
-                    <h3>Task 3</h3>
-                    <p>Make music that incorporates generative randomness and/or logic.</p>
-                </div>
-                <div id="task4">
-                    <hr>
-                    <h3>Task 4</h3>
-                    <p>Make music however you see fit.</p>
-                </div>
             </div>
         </div>
         <div id="textarea"></div>
     </div>
 
+    <div id="about">
+        <h2>About</h2>
+        <p>Toneblocks is a block-based visual programming environment for creating music with code. It was originally
+        developed as my masters thesis at NYU Steinhardt's Music Technology graduate program. I sought to generate a tool
+        that is both intuitive and interesting for novice users with interests in computer programming and music.</p>
+    </div>
+
     <script>
-	
-	Blockly.Msg.MUSIC_HUE = 0;	
-	Blockly.Msg.LOGIC_HUE = 90;
-	Blockly.Msg.MATH_HUE = 180;
-	Blockly.Msg.LIST_HUE = 270;
-	
+
+        Blockly.Msg.MUSIC_HUE = 0;
+        Blockly.Msg.LOGIC_HUE = 90;
+        Blockly.Msg.MATH_HUE = 180;
+        Blockly.Msg.LIST_HUE = 270;
+
         // create new theme based on Dark with music category style
         const theme = Blockly.Theme.defineTheme('MQ', {
             'base': Blockly.Themes.Dark,
@@ -349,44 +360,46 @@
                 'music_category': {
                     'colour': '%{BKY_MUSIC_HUE}'
                 },
-		'logic_category': {
-		    'colour': '%{BKY_LOGIC_HUE}'
-            	},
-		'math_category': {
-		    'colour': '%{BKY_MATH_HUE}'
-		},
-		'list_category': {
-		    'colour': '%{BKY_LIST_HUE}'
-		}
-	    },
-	    'blockStyles': {
-		'music_blocks': {
-		    'colourPrimary': '%{BKY_MUSIC_HUE}'
-		},	
-		'logic_blocks': {
-		    'colourPrimary': '%{BKY_LOGIC_HUE}'
-		},
-		'math_blocks': {
-		    'colourPrimary': '%{BKY_MATH_HUE}'
-		},
-		'list_blocks': {
-		    'colourPrimary': '%{BKY_LIST_HUE}'
-		}	
-	    }
+                'logic_category': {
+                    'colour': '%{BKY_LOGIC_HUE}'
+                },
+                'math_category': {
+                    'colour': '%{BKY_MATH_HUE}'
+                },
+                'list_category': {
+                    'colour': '%{BKY_LIST_HUE}'
+                }
+            },
+            'blockStyles': {
+                'music_blocks': {
+                    'colourPrimary': '%{BKY_MUSIC_HUE}'
+                },
+                'logic_blocks': {
+                    'colourPrimary': '%{BKY_LOGIC_HUE}'
+                },
+                'math_blocks': {
+                    'colourPrimary': '%{BKY_MATH_HUE}'
+                },
+                'list_blocks': {
+                    'colourPrimary': '%{BKY_LIST_HUE}'
+                }
+            }
         });
 
         // inject Blockly into workspace
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox'),
             theme: 'MQ',
-	    zoom:
-               {controls: true,
-          	wheel: true,
-          	startScale: 1.0,
-          	maxScale: 3,
-          	minScale: 0.3,
-          	scaleSpeed: 1.2,
-          	pinch: true}
+            zoom:
+            {
+                controls: true,
+                wheel: true,
+                startScale: 1.0,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2,
+                pinch: true
+            }
         });
 
         // set tempo for transport and monitor for change

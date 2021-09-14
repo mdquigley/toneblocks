@@ -35,12 +35,6 @@ li {
     margin-top: 5px;
 }
 
-#title {
-    text-align: left;
-    margin-left: 225px;
-    
-}
-
 #doc-nav{
     display: flex;
     flex-direction: row;
@@ -54,4 +48,16 @@ li {
 
 #hide {
     display: none;
+}
+
+.nav-item .nav-link {
+    text-align: right;
+}
+
+#about {
+    padding: 20px;
+}
+
+#blocklyDiv {
+    margin-left: 20px;
 }
