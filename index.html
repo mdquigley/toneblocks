@@ -62,14 +62,17 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                        <a class="nav-link" href="#controls">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">Tutorial</a>
+                        <a class="nav-link" href="#documentation">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
                     </li>
 
                 </ul>
-                <ul class="navbar-nav me-auto" width="100">
+                <ul class="navbar-nav" width="100">
                     <li class="nav-item subtitle">A web based, musical creative coding environment.</li>
                 </ul>
             </div>
@@ -82,7 +85,25 @@
     <!-- <button type="button" id="start">Start</button> -->
     <!-- <button type="button" id="stop">Stop</button><br /> -->
 
-    <div class="controls">
+
+    <div id="about" class="scroll" style="max-height:100%;overflow:auto;">
+
+        <img src="img/tb.png" height="100">
+        <section class="info">
+            <p>Toneblocks is a block-based visual programming environment for creating music with code, all in your
+                browser.
+            </p>
+            <p>Designed for users with interests in computer programming and music, Toneblocks leverages creative play
+                to lower barriers and increase engagement, whether you're a beginner or a seasoned programmer and
+                musician!
+            </p>
+            <button id="try" class="btn btn-primary"><a href="#controls"
+                    style="text-decoration: none; color: inherit">Try it
+                    out!</a></button>
+        </section>
+    </div>
+
+    <div id="controls" class="controls">
         <button type="button" id="run" class="btn btn-primary">Start</button><br />
         <label for="tempo">Tempo:</label>
         <input type="range" name="tempo" id="tempo" min="20" max="260" value="120"><br />
@@ -94,7 +115,7 @@
 
     <!-- create empty div for blockly -->
     <div id="main">
-        <div id="blocklyDiv" style="height: 80vh; width: 100vw"></div>
+        <div id="blocklyDiv"></div>
 
         <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
             <category name="Music" categorystyle="music_category">
@@ -314,7 +335,7 @@
 
 
         <div id="documentation">
-            <div id="scroll" style="max-height:100%;overflow:auto;">
+            <div class="scroll" style="max-height:100%;overflow:auto;">
                 <div id="tutorial">
                     <h3>Tutorial (<i>Hello World</i>)</h3>
                     <img src="img/hello-tone.png" width="200px">
@@ -329,26 +350,26 @@
                             middle C, or C4.</li>
                     </ul>
                     <p>Go ahead and recreate the example on your own!</p>
-
-
-                    <h2>About</h2>
-                    <p>Toneblocks is a block-based visual programming environment for creating music with code. It
-                        was
-                        originally
-                        developed as my masters thesis at NYU Steinhardt's Music Technology graduate program. I
-                        sought to
-                        generate a
-                        tool
-                        that is both intuitive and interesting for novice users with interests in computer
-                        programming and
-                        music.
-                    </p>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="docs" class="container">
 
+        <footer>
+            <div id="contact" class="scroll">
+                <h2>Contact</h2>
+                <p>Developer: <a href="https://quig.info">Mike Quigley</a></p>
+                <p>Source Code: <a href="https://github.com/mdquigley/toneblocks">GitHub</a></p>
+
+                <p>Toneblocks was
+                    originally developed as my graduate thesis at NYU Steinhardt's Music Technology Program. </p>
+                <p>A <a href="http://nime2021.org/program/#/paper/122">short paper & demo</a> were presented at the New
+                    Interfaces for Musical Expression conference in 2021.
+                </p>
+                <p>The app is
+                    still in alpha and I appreciate feedback of any kind!
+                </p>
+            </div>
+        </footer>
     </div>
 
     <script>
