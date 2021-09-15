@@ -94,6 +94,10 @@ footer {
     margin: 20px;
 }
 
+#warning {
+    display: none;
+}
+
 @media screen and (max-width: 1495px) {
     .info {
         min-width: 500px;
@@ -128,4 +132,11 @@ footer {
         background: linear-gradient(to bottom,#78c2ad, #ffffffaa);
         align-items: center;
     }
+}
+
+@media screen and (max-width: 500px) {
+    #warning {
+        display: block !important;
+    }
+
 }
